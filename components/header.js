@@ -1,12 +1,15 @@
 import Link from 'next/link'
+import { useSiteContext } from '../context/use-site';
 
 export default function Header() {
-  return (
+    const siteSettings = useSiteContext();
+    const { generalSettings: { title, url, description } } = siteSettings;
+
+    return (
     <h2 className="text-2xl md:text-4xl font-bold tracking-tight md:tracking-tighter leading-tight mb-20 mt-8">
       <Link href="/">
-        <a className="hover:underline">Blog</a>
+        <a className="hover:underline">{title}</a>
       </Link>
-      .
     </h2>
-  )
+    )
 }
