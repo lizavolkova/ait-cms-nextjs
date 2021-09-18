@@ -3,7 +3,8 @@ import { useSiteContext } from '../context/use-site';
 
 export default function Header() {
     const siteSettings = useSiteContext();
-    const { generalSettings: { title, url, description } } = siteSettings;
+    const { generalSettings } = siteSettings ? siteSettings : {};
+    const { title } = generalSettings ? generalSettings : {};
 
     return (
     <h2 className="text-2xl md:text-4xl font-bold tracking-tight md:tracking-tighter leading-tight mb-20 mt-8">
