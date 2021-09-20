@@ -102,3 +102,25 @@
 .wp-block-media-text {
   @apply grid grid-cols-2 gap-4;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Cormorant Garamond";
+}
+
+p {
+  font-family: "Roboto";
+  font-size: .9rem;
+  color: #7f7f7f;
+}
+
+.date-tags {
+  font-family: "Roboto";
+  font-size: 0.675rem;
+  text-transform: uppercase;
+  color: #7f7f7f;
+}

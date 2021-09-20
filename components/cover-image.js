@@ -3,10 +3,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export default function CoverImage({ title, coverImage, slug }) {
+
   const image = (
     <Image
-      width={2000}
-      height={1000}
+      width={coverImage?.mediaDetails?.width ?? 2000}
+      height={coverImage?.mediaDetails?.height ?? 1000}
       alt={`Cover Image for ${title}`}
       src={coverImage?.sourceUrl}
       className={cn('shadow-small', {
