@@ -12,7 +12,6 @@ export default function Alert({ preview }) {
     >
       <Container>
         <div className="py-2 text-center text-sm">
-            MENU WILL GO HERE <br />
           {preview ? (
             <>
               This is a page preview.{' '}
