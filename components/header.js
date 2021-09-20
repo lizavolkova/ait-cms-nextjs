@@ -1,14 +1,23 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { useSiteContext } from '../context/use-site';
 
 export default function Header() {
-    const { siteSettings = {} } = useSiteContext();
+    const siteSettings = useSiteContext();
 
     return (
-    <h2 className="text-2xl md:text-4xl font-bold tracking-tight md:tracking-tighter leading-tight mb-20 mt-8">
+    <div className="flex  mb-20 mt-8 justify-center items-center">
       <Link href="/">
-        <a className="hover:underline">{siteSettings?.generalSettings?.title}</a>
+        <a className="w-80">
+            <Image
+                width={2000}
+                height={440}
+                src={siteSettings?.siteLogo.sourceUrl}
+                alt={siteSettings?.generalSettings.title}
+            /></a>
+
       </Link>
-    </h2>
+    </div>
     )
 }
+
