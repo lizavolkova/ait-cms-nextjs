@@ -14,7 +14,6 @@ export default function Post({ allPosts = {}, preview, settings, params }) {
   return (
       <Layout preview={preview}>
         <Container>
-          <Header />
           <div>tag: {params?.slug}</div>
           {edges && <AllPosts morePosts={edges}/>}
         </Container>

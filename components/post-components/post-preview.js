@@ -14,7 +14,7 @@ export default function PostPreview({
   categories
 }) {
   return (
-    <div className="mb-4 p-0 md: p-2">
+    <div className="mb-4 p-0 md:p-2">
       <h3 className="text-2xl md:text-3xl mb-3 leading-snug text-center">
         <Link href={`/posts/${slug}`}>
           <a

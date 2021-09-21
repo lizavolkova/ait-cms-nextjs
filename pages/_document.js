@@ -6,6 +6,7 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head >
             <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond|Roboto" rel="stylesheet" />
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         </Head>
         <body>
           <Main />

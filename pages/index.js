@@ -21,7 +21,6 @@ export default function Index({ allPosts: { edges }, preview, settings }) {
           <title>Next.js Blog Example with {CMS_NAME}</title>
         </Head>
         <Container>
-          <Header />
           <LayoutSideBar>
             {heroPost && (
                 <PostPreview

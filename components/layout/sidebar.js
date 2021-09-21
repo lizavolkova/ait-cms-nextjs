@@ -7,7 +7,7 @@ export default function SideBar() {
     const siteSettings = useSiteContext();
 
     return (
-        <div className="border-b border-accent-2">
+        <div className="border-b border-accent-2 md:sticky top-20 ">
             <SideBarCard title="About Me">some text here</SideBarCard>
             <SideBarCard title="Instagram">some text here</SideBarCard>
             <SideBarCard title="Browse by category">

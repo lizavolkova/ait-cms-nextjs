@@ -2,11 +2,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useSiteContext } from '../../context/use-site';
 
-export default function Header() {
+export default function Header({element}) {
     const siteSettings = useSiteContext();
 
     return (
-    <div className="flex mb-4 md:mb-10 mt-8 justify-center items-center ">
+    <div ref={element} className="flex mb-4 md:mb-10 mt-8 justify-center items-center ">
       <Link href="/">
         <a className="w-2/3 sm:w-80">
             <Image
