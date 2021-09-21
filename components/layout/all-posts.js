@@ -1,6 +1,6 @@
 import LayoutSideBar from "./layout-sidebar";
-import PostPreview from "../post-preview";
-import MoreStories from "../more-stories";
+import PostPreview from "../post-components/post-preview";
+import MoreStories from "../post-components/more-stories";
 
 export default function AllPosts({ preview, heroPost, morePosts }) {
     return (

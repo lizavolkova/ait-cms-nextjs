@@ -1,13 +1,13 @@
 import Head from 'next/head'
 import Container from '../components/container'
-import MoreStories from '../components/more-stories'
-import HeroPost from '../components/hero-post'
+import MoreStories from '../components/post-components/more-stories'
+import HeroPost from '../components/post-components/hero-post'
 import Layout from '../components/layout/layout'
 import SideBar from '../components/layout/sidebar'
 import { getAllPostsForHome, getBlogSettings } from '../lib/api'
 import { CMS_NAME } from '../lib/constants'
 import Header from "../components/layout/header";
-import PostPreview from "../components/post-preview";
+import PostPreview from "../components/post-components/post-preview";
 import LayoutSideBar from '../components/layout/layout-sidebar';
 
 export default function Index({ allPosts: { edges }, preview, settings }) {
