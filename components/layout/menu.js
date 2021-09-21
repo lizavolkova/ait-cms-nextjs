@@ -2,10 +2,18 @@ import Container from '../container'
 import { useSiteContext } from "../../context/use-site";
 import cn from 'classnames'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 
 export default function Menu({ sticky }) {
     const siteSettings = useSiteContext();
+    const router = useRouter()
 
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        const searchQuery = e.target.search.value
+        e.target.reset();
+        router.push(`/?s=${searchQuery}`);
+    }
 
     return (
         <div className="border-b bg-accent-1 border-accent-2 lg:sticky top-0 z-10">
@@ -34,13 +42,15 @@ export default function Menu({ sticky }) {
                     </div>
 
                     <div className={cn('w-52 transition-opacity duration-400 hidden lg:block', sticky? 'opacity-1' : 'opacity-0')}>
-                        <div className="shadow flex">
-                            <input className="w-full rounded p-2" type="text" placeholder="Search..." />
-                                <button
-                                    className="bg-white w-auto flex justify-end items-center text-blue-500 p-2 hover:text-blue-400">
-                                    <i className="material-icons text-mainPink">search</i>
-                                </button>
-                        </div>
+                        <form onSubmit={e => handleSearchSubmit(e)}>
+                            <div className="shadow flex">
+                                <input className="w-full rounded p-2" type="text" placeholder="Search..." name="search"/>
+                                    <button
+                                        className="bg-white w-auto flex justify-end items-center text-blue-500 p-2 hover:text-blue-400">
+                                        <i className="material-icons text-mainPink">search</i>
+                                    </button>
+                            </div>
+                        </form>
                     </div>
                 </nav>
             </Container>
