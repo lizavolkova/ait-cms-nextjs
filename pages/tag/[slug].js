@@ -8,13 +8,15 @@ import Container from "../../components/container";
 import Header from "../../components/layout/header";
 import Layout from "../../components/layout/layout";
 
-export default function Post({ allPosts: { edges }, preview, settings, params }) {
+export default function Post({ allPosts = {}, preview, settings, params }) {
+  const { edges } = allPosts;
+
   return (
         <Layout preview={preview}>
           <Container>
             <Header />
-            <div>tag: {params.slug}</div>
-            <AllPosts morePosts={edges} />
+            <div>tag: {params?.slug}</div>
+            {edges && <AllPosts morePosts={edges} />}
           </Container>
         </Layout>
   )
