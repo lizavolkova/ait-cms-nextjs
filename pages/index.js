@@ -31,6 +31,7 @@ export default function Index({ allPosts: { edges }, preview, settings }) {
                     author={heroPost.author?.node}
                     slug={heroPost.slug}
                     excerpt={heroPost.excerpt}
+                    categories={heroPost.categories}
                 />
 
             )}

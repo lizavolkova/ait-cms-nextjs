@@ -6,9 +6,9 @@ export default function Header() {
     const siteSettings = useSiteContext();
 
     return (
-    <div className="flex  mb-20 mt-8 justify-center items-center">
+    <div className="flex mb-4 md:mb-20 mt-8 justify-center items-center ">
       <Link href="/">
-        <a className="w-80">
+        <a className="w-50 md:w-80">
             <Image
                 width={2000}
                 height={440}

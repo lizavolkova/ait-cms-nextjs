@@ -1,6 +1,7 @@
 import {useSiteContext} from "../../context/use-site"
 import SideBarCard from '../sidebar-card'
 import Link from 'next/link'
+import TagCloud from '../tag-cloud'
 
 export default function SideBar() {
     const siteSettings = useSiteContext();
@@ -24,15 +25,7 @@ export default function SideBar() {
                 }
             </SideBarCard>
             <SideBarCard title="Tags">
-                {
-                    siteSettings?.tags?.edges.map(tag => {
-                        return (
-                            <Link key={tag.node.id} href={tag.node.uri}>
-                                <a className="hover:underline inline-block">{tag.node.name}&nbsp;</a>
-                            </Link>
-                        )
-                    })
-                }
+                { siteSettings?.tags && <TagCloud tags={siteSettings.tags} minFont={9} maxFont={22}/> }
             </SideBarCard>
         </div>
     )

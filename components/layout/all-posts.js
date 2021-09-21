@@ -13,6 +13,7 @@ export default function AllPosts({ preview, heroPost, morePosts }) {
                     author={heroPost.author?.node}
                     slug={heroPost.slug}
                     excerpt={heroPost.excerpt}
+                    categories={heroPost.categories}
                 />
 
             )}

@@ -112,6 +112,10 @@ h6 {
   font-family: "Cormorant Garamond";
 }
 
+a {
+  color: #C2185B;
+}
+
 p {
   font-family: "Roboto";
   font-size: .9rem;

@@ -52,7 +52,7 @@ export default function Post({ settings, post, posts, preview }) {
                 />
                 <PostBody content={post.content} />
                 <footer>
-                  {post.tags.edges.length > 0 && <Tags tags={post.tags} />}
+                  {/*{post.tags.edges.length > 0 && <Tags tags={post.tags} />}*/}
                 </footer>
               </article>
 
