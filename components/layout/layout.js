@@ -1,7 +1,7 @@
 // import Alert from '../components/alert'
-import Menu from '../components/menu'
-import Footer from '../components/footer'
-import Meta from '../components/meta'
+import Menu from './menu'
+import Footer from './footer'
+import Meta from '../meta'
 
 export default function Layout({ preview, children }) {
   return (

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { useSiteContext } from '../context/use-site';
+import { useSiteContext } from '../../context/use-site';
 
 export default function Header() {
     const siteSettings = useSiteContext();
@@ -14,7 +14,8 @@ export default function Header() {
                 height={440}
                 src={siteSettings?.siteLogo.sourceUrl}
                 alt={siteSettings?.generalSettings.title}
-            /></a>
+            />
+        </a>
 
       </Link>
     </div>

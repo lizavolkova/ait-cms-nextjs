@@ -1,5 +1,5 @@
-import Container from './container'
-import {useSiteContext} from "../context/use-site";
+import Container from '../container'
+import {useSiteContext} from "../../context/use-site";
 
 export default function Menu() {
     const siteSettings = useSiteContext();
