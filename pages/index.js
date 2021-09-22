@@ -16,8 +16,6 @@ export default function Index({ allPosts: { edges }, preview, settings }) {
   const [isLoading, setIsLoading] = useState(true)
   const searchQuery = router?.query?.s
 
-  const [isShowing, setIsShowing] = useState(false)
-
   useEffect( () => {
     // if you're on the home page, but performing search
     if (searchQuery) {
