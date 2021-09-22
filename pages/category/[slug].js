@@ -15,7 +15,7 @@ export default function Post({ allPosts = {}, preview, settings, params }) {
       <Layout preview={preview}>
         <Container>
             <div>category: {params?.slug}</div>
-            <PostTransition appear={true} show={edges.length > 0}>
+            <PostTransition appear={true} show={edges && edges.length > 0}>
                 <AllPosts morePosts={edges}/>
             </PostTransition>
         </Container>
