@@ -1,6 +1,6 @@
 import {Transition} from "@headlessui/react";
 
-export default function PostTransition({children, show, appear}) {
+export default function PostTransition({children, show = false, appear}) {
     return(
         <Transition
             appear={appear}
