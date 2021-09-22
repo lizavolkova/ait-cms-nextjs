@@ -5,8 +5,8 @@ import {
 } from '../../lib/api'
 import AllPosts from "../../components/layout/all-posts";
 import Container from "../../components/container";
-import Header from "../../components/layout/header";
 import Layout from "../../components/layout/layout";
+import PostTransition from "../../components/post-components/posts-transition";
 
 export default function Post({ allPosts = {}, preview, settings, params }) {
   const { edges } = allPosts;
@@ -15,7 +15,9 @@ export default function Post({ allPosts = {}, preview, settings, params }) {
       <Layout preview={preview}>
         <Container>
           <div>tag: {params?.slug}</div>
-          {edges && <AllPosts morePosts={edges}/>}
+          <PostTransition appear={true} show={edges.length > 0}>
+            <AllPosts morePosts={edges}/>
+          </PostTransition>
         </Container>
       </Layout>
   )
