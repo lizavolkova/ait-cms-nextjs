@@ -2,6 +2,7 @@ import {useSiteContext} from "../../context/use-site"
 import SideBarCard from '../post-components/sidebar-card'
 import Link from 'next/link'
 import TagCloud from '../tag-cloud'
+import Search from "../search";
 
 export default function SideBar() {
     const siteSettings = useSiteContext();
@@ -10,6 +11,9 @@ export default function SideBar() {
         <div className="border-b border-accent-2 md:sticky top-20 ">
             <SideBarCard title="About Me">some text here</SideBarCard>
             <SideBarCard title="Instagram">some text here</SideBarCard>
+            <SideBarCard title="Search">
+                <Search />
+            </SideBarCard>
             <SideBarCard title="Browse by category">
                 {
                     siteSettings?.categories?.edges.map(category => {
