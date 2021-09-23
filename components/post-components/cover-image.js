@@ -28,10 +28,11 @@ export default function CoverImage({ title, coverImage, slug }) {
       blurDataURL={small_image}
       placeholder="blur"
       onLoadingComplete={() => setLoaded(true)}
-      className={cn('shadow-small rounded-sm',
+      className={cn('filter shadow-small rounded-sm ',
           {
               'hover:shadow-medium transition-shadow duration-200': slug,
-              'unblur': loaded,
+              'opacity-50': !loaded,
+              'unblur opacity-100': loaded,
           }
       )}
     />
@@ -40,7 +41,7 @@ export default function CoverImage({ title, coverImage, slug }) {
     <div className="sm:mx-0">
       {slug ? (
         <Link href={`/posts/${slug}`}>
-          <a aria-label={title}>{image}</a>
+          <a aria-label={title} className="cover-image">{image}</a>
         </Link>
       ) : (
         image
