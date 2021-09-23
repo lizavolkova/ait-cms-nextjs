@@ -7,13 +7,17 @@ import Header from '../../components/layout/header'
 import PostHeader from '../../components/post-components/post-header'
 import SectionSeparator from '../../components/section-separator'
 import Layout from '../../components/layout/layout'
-import { getAllPostsWithSlug, getPostAndMorePosts, getBlogSettings } from '../../lib/api'
+import {
+  getAllPostsWithSlug,
+  getPostAndMorePosts,
+  getBlogSettings,
+} from '../../lib/api'
 import PostTitle from '../../components/post-components/post-title'
 import Head from 'next/head'
 import { CMS_NAME } from '../../lib/constants'
 import Tags from '../../components/post-components/tags'
-import PostPreview from "../../components/post-components/post-preview";
-import LayoutSideBar from "../../components/layout/layout-sidebar";
+import PostPreview from '../../components/post-components/post-preview'
+import LayoutSideBar from '../../components/layout/layout-sidebar'
 
 export default function Post({ settings, post, posts, preview }) {
   const router = useRouter()
@@ -29,7 +33,6 @@ export default function Post({ settings, post, posts, preview }) {
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (
-
           <LayoutSideBar>
             <>
               <article>
@@ -38,16 +41,16 @@ export default function Post({ settings, post, posts, preview }) {
                     {post.title} | Next.js Blog Example with {CMS_NAME}
                   </title>
                   <meta
-                      property="og:image"
-                      content={post.featuredImage?.node?.sourceUrl}
+                    property="og:image"
+                    content={post.featuredImage?.node?.sourceUrl}
                   />
                 </Head>
                 <PostHeader
-                    title={post.title}
-                    coverImage={post.featuredImage?.node}
-                    date={post.date}
-                    author={post.author?.node}
-                    categories={post.categories}
+                  title={post.title}
+                  coverImage={post.featuredImage?.node}
+                  date={post.date}
+                  author={post.author?.node}
+                  categories={post.categories}
                 />
                 <PostBody content={post.content} />
                 <footer>
@@ -66,7 +69,7 @@ export default function Post({ settings, post, posts, preview }) {
 }
 
 export async function getStaticProps({ params, preview = false, previewData }) {
-  const settings = await getBlogSettings();
+  const settings = await getBlogSettings()
   const data = await getPostAndMorePosts(params.slug, preview, previewData)
 
   return {

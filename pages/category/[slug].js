@@ -1,34 +1,35 @@
 import {
   getBlogSettings,
   getAllCategories,
-  getAllPostsByCategory, getAllPostsForHome
+  getAllPostsByCategory,
+  getAllPostsForHome,
 } from '../../lib/api'
-import Layout from "../../components/layout/layout";
-import Container from "../../components/container";
-import AllPosts from "../../components/layout/all-posts";
-import PostTransition from "../../components/post-components/posts-transition";
+import Layout from '../../components/layout/layout'
+import Container from '../../components/container'
+import AllPosts from '../../components/layout/all-posts'
+import PostTransition from '../../components/post-components/posts-transition'
 
 export default function Post({ allPosts = {}, preview, settings, params }) {
- const { edges } = allPosts;
+  const { edges } = allPosts
 
   return (
-      <Layout preview={preview}>
-        <Container>
-            <div>category: {params?.slug}</div>
-            <PostTransition appear={true} show={edges && edges.length > 0}>
-                <AllPosts morePosts={edges}/>
-            </PostTransition>
-        </Container>
-      </Layout>
+    <Layout preview={preview}>
+      <Container>
+        <div>category: {params?.slug}</div>
+        <PostTransition appear={true} show={edges && edges.length > 0}>
+          <AllPosts morePosts={edges} />
+        </PostTransition>
+      </Container>
+    </Layout>
   )
 }
 
 export async function getStaticProps({ params, preview = false, previewData }) {
-  const settings = await getBlogSettings();
+  const settings = await getBlogSettings()
   const allPosts = await getAllPostsByCategory(preview, params.slug)
 
   return {
-    props: { allPosts, preview, settings, params }
+    props: { allPosts, preview, settings, params },
   }
 }
 

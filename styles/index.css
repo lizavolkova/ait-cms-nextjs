@@ -109,7 +109,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Cormorant Garamond";
+  font-family: 'Cormorant Garamond';
 }
 
 a {
@@ -117,20 +117,30 @@ a {
 }
 
 p {
-  font-family: "Roboto";
-  font-size: .9rem;
+  font-family: 'Roboto';
+  font-size: 0.9rem;
   color: #7f7f7f;
 }
 
 .date-tags {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-size: 0.675rem;
   text-transform: uppercase;
   color: #7f7f7f;
 }
 
-@layer base { .cover-image > div:first-child { overflow: visible; @apply shadow-sm transition-shadow} }
-@layer base { .cover-image:hover > div:first-child { overflow: visible; @apply shadow-md; } }
+@layer base {
+  .cover-image > div:first-child {
+    overflow: visible;
+    @apply shadow-sm transition-shadow;
+  }
+}
+@layer base {
+  .cover-image:hover > div:first-child {
+    overflow: visible;
+    @apply shadow-md;
+  }
+}
 
 .unblur {
   animation: unblur 0.25s ease-in-out;

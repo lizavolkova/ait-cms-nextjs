@@ -25,9 +25,7 @@ export default function HeroPost({
           </div>
           <h3 className="center mb-4 text-4xl lg:text-4xl leading-tight">
             <Link href={`/posts/${slug}`}>
-              <a
-                dangerouslySetInnerHTML={{ __html: title }}
-              />
+              <a dangerouslySetInnerHTML={{ __html: title }} />
             </Link>
           </h3>
         </div>

@@ -2,7 +2,7 @@ import Avatar from './avatar'
 import Date from './date'
 import CoverImage from './cover-image'
 import Link from 'next/link'
-import Categories from "./categories";
+import Categories from './categories'
 
 export default function PostPreview({
   title,
@@ -11,7 +11,7 @@ export default function PostPreview({
   excerpt,
   author,
   slug,
-  categories
+  categories,
 }) {
   return (
     <div className="mb-4 p-0 md:p-2">
@@ -23,15 +23,15 @@ export default function PostPreview({
           ></a>
         </Link>
       </h3>
-        <div className="text-lg date-tags text-center mb-4">
-            <Date dateString={date} />
-            <Categories categories={categories} />
-        </div>
-        <div>
-            {coverImage && (
-                <CoverImage title={title} coverImage={coverImage} slug={slug} />
-            )}
-        </div>
+      <div className="text-lg date-tags text-center mb-4">
+        <Date dateString={date} />
+        <Categories categories={categories} />
+      </div>
+      <div>
+        {coverImage && (
+          <CoverImage title={title} coverImage={coverImage} slug={slug} />
+        )}
+      </div>
       <div
         className="text-lg leading-relaxed mb-4"
         dangerouslySetInnerHTML={{ __html: excerpt }}

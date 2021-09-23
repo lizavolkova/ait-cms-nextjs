@@ -10,7 +10,7 @@ module.exports = {
         'accent-7': '#333',
         success: '#0070f3',
         cyan: '#79FFE1',
-        mainPink: '#C2185B'
+        mainPink: '#C2185B',
       },
       spacing: {
         28: '7rem',
@@ -32,8 +32,8 @@ module.exports = {
         medium: '0 8px 30px rgba(0, 0, 0, 0.12)',
       },
       fontFamily: {
-        'cormorant': ['"Cormorant Garamond"']
-      }
+        cormorant: ['"Cormorant Garamond"'],
+      },
     },
   },
   variants: {
