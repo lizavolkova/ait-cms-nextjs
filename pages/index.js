@@ -1,13 +1,9 @@
-import Container from '../components/container'
-import MoreStories from '../components/post-components/more-stories'
-import Layout from '../components/layout/layout'
-import { getAllPostsForHome, getBlogSettings } from '../lib/api'
-import PostPreview from '../components/post-components/post-preview'
-import LayoutSideBar from '../components/layout/layout-sidebar'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import BlogLoading from '../components/post-components/blog-loading'
-import { Transition } from '@headlessui/react'
+import { getAllPostsForHome, getBlogSettings } from '../lib/api'
+import Container from '../components/container'
+import Layout from '../components/layout/layout'
+import LayoutSideBar from '../components/layout/layout-sidebar'
 import HomeLayout from '../components/layout/home-layout'
 
 export default function Index({ allPosts: { edges }, preview, settings }) {
@@ -50,10 +46,12 @@ export default function Index({ allPosts: { edges }, preview, settings }) {
 }
 
 export async function getStaticProps({ preview = false }) {
+
+
   const settings = await getBlogSettings()
   const allPosts = await getAllPostsForHome(preview)
 
   return {
-    props: { allPosts, preview, settings },
+    props: { allPosts, preview, settings},
   }
 }
