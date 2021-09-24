@@ -23,13 +23,13 @@ const getAll = async () => {
 };
 
 export async function images(event) {
-    // console.log(event.headers['X-API-KEY'], process.env.API_KEY);
-    //
-    // if (event.headers['X-API-KEY'] !== process.env.API_KEY) {
-    //     return {
-    //         statusCode: 403
-    //     };
-    // }
+    console.log(event.headers['X-API-KEY'], process.env.API_KEY);
+
+    if (event.headers['X-API-KEY'] !== process.env.API_KEY) {
+        return {
+            statusCode: 403
+        };
+    }
 
     const data = await getAll();
 
@@ -44,11 +44,11 @@ export async function images(event) {
 };
 
 export const signedUrl = async (event) => {
-    // if (event.headers['X-API-KEY'] !== process.env.API_KEY) {
-    //   return {
-    //     statusCode: 403
-    //   };
-    // }
+    if (event.headers['X-API-KEY'] !== process.env.API_KEY) {
+      return {
+        statusCode: 403
+      };
+    }
 
     const { key } = event.queryStringParameters;
     const s3 = new S3({});
