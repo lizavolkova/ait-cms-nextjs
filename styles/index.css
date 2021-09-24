@@ -143,16 +143,14 @@ p {
 }
 
 .unblur {
-  animation: unblur 0.25s ease-in-out;
+  animation: unblur 0.5s ease-in-out;
 }
 
 @keyframes unblur {
   from {
-    filter: blur(10px);
     opacity: 0.5;
   }
   to {
-    filter: blur(0);
     opacity: 1;
   }
 }
