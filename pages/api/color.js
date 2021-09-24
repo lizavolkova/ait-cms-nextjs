@@ -1,18 +1,24 @@
 import * as Vibrant from 'node-vibrant'
 
 export default async function color(req, res) {
-    const {
-        query: { url },
-        method,
-    } = req
+    const { method } = req
 
-    const palette = await Vibrant.from(url).getPalette();
-    const r = palette.LightMuted.rgb[0];
-    const g = palette.LightMuted.rgb[1];
-    const b = palette.LightMuted.rgb[2];
-    const hex = rgbToHex(r, g, b)
+    if (method !== 'POST') {
+        res.status(405).send({ message: 'Only POST requests allowed' })
+        return
+    }
 
-   res.status(200).json({hex})
+    if (method === 'POST') {
+        const { url } = JSON.parse(req.body);
+        const palette = await Vibrant.from(url).getPalette();
+        const r = palette.LightMuted.rgb[0];
+        const g = palette.LightMuted.rgb[1];
+        const b = palette.LightMuted.rgb[2];
+        const hex = rgbToHex(r, g, b)
+
+        res.status(200).json({hex})
+    }
+
 }
 
 //https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb

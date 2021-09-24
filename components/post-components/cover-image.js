@@ -21,10 +21,15 @@ export default function CoverImage({ title, coverImage, slug }) {
       small_image = test.sourceUrl
 
       //fetch dominant color from image
-      fetch(`/api/color?url=${small_image}`).then(res => res.json()).then(color => {
+      fetch(`/api/color`, {
+          method: 'POST',
+          body: JSON.stringify({
+            url: small_image
+          })
+      }).then(res => res.json()).then(color => {
         setDominantColor(color.hex)
 
-        // next/image doesn't supprt dynaic style tag
+        // next/image doesn't support dynamic style tag
         // tailwind doesn't support dynamic colors at runtime
         // facepalm have to resort to refs for the placeholder dominant color image
         const imageTag = (anchorRef.current).getElementsByTagName('img')[0];
@@ -43,7 +48,7 @@ export default function CoverImage({ title, coverImage, slug }) {
       onLoadingComplete={() => setLoaded(true)}
       className={cn(`filter shadow-small rounded-sm`, {
         'hover:shadow-medium transition-shadow duration-200': slug,
-        'unblur opacity-100': loaded,
+        'unblur': loaded,
       })}
     />
   )
