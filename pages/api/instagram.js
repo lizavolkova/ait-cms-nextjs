@@ -1,5 +1,4 @@
 import Instagram from "instagram-web-api"
-import prisma from '../../lib/prisma'
 import fs from 'fs'
 import path from 'path'
 import http from 'http'
