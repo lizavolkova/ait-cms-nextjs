@@ -7,22 +7,20 @@ import util from 'util';
 import stream from 'stream';
 const streamPipeline = util.promisify(require('stream').pipeline)
 const finished = util.promisify(stream.finished);
+import getImages from './getImages'
+import saveImages from './saveImages'
 
 
 
-
-export default async function instagram(req, res) {
+export default async function index(req, res) {
     try {
-        const images = await getImages();
-        //const images = await saveImages();
+        //const images = await getImages();
+        const images = await saveImages();
         res.status(200).json(images)
     } catch(error) {
         console.error(error)
         res.status(500).json({message: error.message, status: error.status})
     }
-
-
-
 
     // const CACHE_PATH = path.resolve('insta.json')
     // let cachedData = [];
@@ -91,18 +89,18 @@ export default async function instagram(req, res) {
     //     // attempt to log in to Instagram
     //     await client.login()
     //     console.log(client);
-    //     // request photos for a specific instagram user
-    //     const instagram = await client.getPhotosByUsername({
+    //     // request photos for a specific index user
+    //     const index = await client.getPhotosByUsername({
     //         username: process.env.IG_USERNAME,
     //     })
     //
-    //     console.log(instagram);
+    //     console.log(index);
     //
-    //     if (instagram["user"]["edge_owner_to_timeline_media"]["count"] > 0) {
+    //     if (index["user"]["edge_owner_to_timeline_media"]["count"] > 0) {
     //         // if we receive timeline data back
     //         //  update the posts to be equal
-    //         // to the edges that were returned from the instagram API response
-    //         posts = instagram["user"]["edge_owner_to_timeline_media"]["edges"]
+    //         // to the edges that were returned from the index API response
+    //         posts = index["user"]["edge_owner_to_timeline_media"]["edges"]
     //     }
     // } catch (err) {
     //     // throw an error if login to Instagram fails
@@ -134,84 +132,5 @@ export default async function instagram(req, res) {
 // }
 
 
-const saveImages = async () => {
-    try {
-        const body = [
-            {
-                Key: 'red-leaves.jpg',
-                url: 'https://images.pexels.com/photos/2388865/pexels-photo-2388865.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-            },
-            {
-                Key: 'autumn-leaves.jpg',
-                url: 'https://images.pexels.com/photos/1590551/pexels-photo-1590551.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-            },
-            {
-                Key: 'pumpkins.jpg',
-                url: 'https://images.pexels.com/photos/619418/pexels-photo-619418.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
-            }
-        ]
 
 
-        const res = await fetch('https://opxxbb1zq6.execute-api.us-east-1.amazonaws.com/dev/uploadImages', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body)
-        })
-        const resJson = await res.json();
-        console.log(resJson)
-
-        return resJson;
-    } catch(error) {
-        throw new Error(`Error saving images: ${error}`);
-    }
-
-}
-
-//https://darrenwhite.dev/blog/nextjs-aws-image-demo-part-3
-const getImages = async () => {
-    try {
-        const options = {
-            headers: {
-                'x-api-key': process.env.API_KEY,
-                'Content-Type': 'application/json'
-            },
-        };
-
-        const imagesRes = await fetch('https://opxxbb1zq6.execute-api.us-east-1.amazonaws.com/dev/images', options);
-
-        if (!imagesRes.ok) {
-            throw new Error(imagesRes.statusText);
-        }
-
-        const { data } = await imagesRes.json();
-
-        const images = data.map(({Key}) => {
-            return `https://opxxbb1zq6.execute-api.us-east-1.amazonaws.com/dev/signed-url?key=${Key}`
-        })
-
-        // map every URL to promise of the fetch
-        const requests = images.map((url) => fetch(url, options));
-        const responses = await Promise.all(requests);
-        //TODO: add error handling to this promise
-
-        // convert to json and push to images array
-        // TODO: can this be optimized
-        const imagesData = [];
-        await Promise.all(
-            responses.map(async (r) => {
-                const json = await r.json();
-                imagesData.push(json);
-            })
-        );
-
-        if (!data) {
-            throw new Error('Data not found');
-        }
-
-        return imagesData;
-    } catch (error) {
-        throw new Error(`Error fetching images: ${error}`);
-    }
-}

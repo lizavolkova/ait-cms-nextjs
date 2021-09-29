@@ -58,7 +58,7 @@ export default function InstagramFeed() {
 
 // <ul>
 //     {/* let's iterate through each of the
-//          instagram posts that were returned
+//          index posts that were returned
 //          from the Instagram API*/}
 //     {posts.map(({ node }, i) => {
 //         return (
@@ -73,7 +73,7 @@ export default function InstagramFeed() {
 //                 >
 //                     {/* set the image src equal to the image
 //                 url from the Instagram API*/}
-//                     <Image src='/instagram/img-954614431982330478.jpg' width={100} height={100}/>
+//                     <Image src='/index/img-954614431982330478.jpg' width={100} height={100}/>
 //
 //                     {/*<img*/}
 //                     {/*    src={node.display_url}*/}
