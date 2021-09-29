@@ -1,13 +1,20 @@
 import Instagram from "instagram-web-api"
-import fs from 'fs'
+import fs from 'fs/promises'
 import path from 'path'
 import http from 'http'
+import fetch from "node-fetch";
+import util from 'util';
+import stream from 'stream';
+const streamPipeline = util.promisify(require('stream').pipeline)
+const finished = util.promisify(stream.finished);
+
 
 
 
 export default async function instagram(req, res) {
     try {
-        const images = await getImages();
+        //const images = await getImages();
+        const images = await saveImages();
         res.status(200).json(images)
     } catch(error) {
         res.status(500).json(error)
@@ -116,6 +123,39 @@ export default async function instagram(req, res) {
     //res.status(200).json(cachedData)
 }
 
+// {
+//     method: 'POST',
+//         body: JSON.stringify(
+//     {
+//         Key: 'test-image.jpg',
+//         url: 'https://images.pexels.com/photos/5490384/pexels-photo-5490384.jpeg?auto=compress&cs=tinysrgb&h=200&w=200'
+//     })
+// }
+
+
+const saveImages = async () => {
+    try {
+        const body = {
+            Key: 'red-leaves.jpg',
+            url: 'https://images.pexels.com/photos/2388865/pexels-photo-2388865.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+        };
+
+
+        const res = await fetch('https://opxxbb1zq6.execute-api.us-east-1.amazonaws.com/dev/uploadImages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+        const resJson = await res.json();
+
+        return {resJson};
+    } catch(error) {
+        throw new Error(`Error saving images: ${error}`);
+    }
+
+}
 
 //https://darrenwhite.dev/blog/nextjs-aws-image-demo-part-3
 const getImages = async () => {
