@@ -4,13 +4,32 @@ import Image from 'next/image'
 
 export default function InstagramFeed() {
     const [posts, setPosts] = useState([])
+    const [error, setError] = useState(false)
 
     useEffect(async () => {
-        const data = await fetch('/api/instagram')
-        const posts = await data.json();
-        setPosts(posts)
+        try {
+            const data = await fetch('/api/instagram')
+            if (!data.ok) {
+                throw new Error(data.statusText);
+            }
+
+            const posts = await data.json();
+            setPosts(posts)
+
+        } catch(error) {
+            console.log('api error')
+            setError(true)
+        }
 
     }, []);
+
+    if (!posts || error) {
+        return (
+            <>
+                There was a problem connecting to Instagram
+            </>
+        )
+    }
 
     return (
         <>
@@ -20,6 +39,8 @@ export default function InstagramFeed() {
                 </a>
                 <ul>
                     {posts.map((post, i) => {
+                        console.log(post);
+                        console.log('----------------');
                         return (
                             <li key={i}>
                                 <Image src={post} width={100} height={100} />

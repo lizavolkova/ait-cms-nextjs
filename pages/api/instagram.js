@@ -13,11 +13,12 @@ const finished = util.promisify(stream.finished);
 
 export default async function instagram(req, res) {
     try {
-        //const images = await getImages();
-        const images = await saveImages();
+        const images = await getImages();
+        //const images = await saveImages();
         res.status(200).json(images)
     } catch(error) {
-        res.status(500).json(error)
+        console.error(error)
+        res.status(500).json({message: error.message, status: error.status})
     }
 
 
@@ -135,10 +136,20 @@ export default async function instagram(req, res) {
 
 const saveImages = async () => {
     try {
-        const body = {
-            Key: 'red-leaves.jpg',
-            url: 'https://images.pexels.com/photos/2388865/pexels-photo-2388865.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
-        };
+        const body = [
+            {
+                Key: 'red-leaves.jpg',
+                url: 'https://images.pexels.com/photos/2388865/pexels-photo-2388865.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'
+            },
+            {
+                Key: 'autumn-leaves.jpg',
+                url: 'https://images.pexels.com/photos/1590551/pexels-photo-1590551.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+            },
+            {
+                Key: 'pumpkins.jpg',
+                url: 'https://images.pexels.com/photos/619418/pexels-photo-619418.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+            }
+        ]
 
 
         const res = await fetch('https://opxxbb1zq6.execute-api.us-east-1.amazonaws.com/dev/uploadImages', {
@@ -149,8 +160,9 @@ const saveImages = async () => {
             body: JSON.stringify(body)
         })
         const resJson = await res.json();
+        console.log(resJson)
 
-        return {resJson};
+        return resJson;
     } catch(error) {
         throw new Error(`Error saving images: ${error}`);
     }
@@ -162,11 +174,17 @@ const getImages = async () => {
     try {
         const options = {
             headers: {
-                'X-API-KEY': process.env.API_KEY,
+                'x-api-key': process.env.API_KEY,
+                'Content-Type': 'application/json'
             },
         };
 
         const imagesRes = await fetch('https://opxxbb1zq6.execute-api.us-east-1.amazonaws.com/dev/images', options);
+
+        if (!imagesRes.ok) {
+            throw new Error(imagesRes.statusText);
+        }
+
         const { data } = await imagesRes.json();
 
         const images = data.map(({Key}) => {
@@ -175,9 +193,11 @@ const getImages = async () => {
 
         // map every URL to promise of the fetch
         const requests = images.map((url) => fetch(url, options));
-
         const responses = await Promise.all(requests);
+        //TODO: add error handling to this promise
 
+        // convert to json and push to images array
+        // TODO: can this be optimized
         const imagesData = [];
         await Promise.all(
             responses.map(async (r) => {

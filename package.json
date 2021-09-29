@@ -4,7 +4,8 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "server": "cd server && serverless deploy"
   },
   "dependencies": {
     "@headlessui/react": "^1.4.1",
