@@ -19,7 +19,7 @@ export default async function index(req, res) {
         res.status(200).json(images)
     } catch(error) {
         console.error(error)
-        res.status(500).json({message: error.message, status: error.status})
+        res.status(500).json({error})
     }
 
     // const CACHE_PATH = path.resolve('insta.json')

@@ -8,17 +8,18 @@ const Bucket = process.env.BUCKET_NAME;
 
 export const handler = async (event) => {
     if (event.headers['x-api-key'] !== process.env.API_KEY) {
-        return {
-            statusCode: 403
-        };
-    }
-
-    if (isEmpty(event.body)) {
-        return createErrorResponse(400, 'Missing details');
+        console.error('Incorrect API key', event.headers['x-api-key'], process.env.API_KEY)
+        return createErrorResponse(403, 'Access denied')
     }
 
     if (event.httpMethod !== 'POST') {
+        console.error('Not a POST request')
         return createErrorResponse(405, 'Method not allowed');
+    }
+
+    if (isEmpty(event.body)) {
+        console.error('Body empty')
+        return createErrorResponse(400, 'Missing details');
     }
 
     const files = JSON.parse(event.body);
