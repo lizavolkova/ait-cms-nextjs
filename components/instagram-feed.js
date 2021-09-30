@@ -31,19 +31,20 @@ export default function InstagramFeed() {
         )
     }
 
+    console.log(posts)
     return (
         <>
             <h2>
                 <a href="https://www.instagram.com/yourinstagramhandle/">
                     Follow Us on Instagram
                 </a>
-                <ul>
+                <ul className="flex flex-wrap justify-center">
                     {posts.map((post, i) => {
-                        console.log(post);
-                        console.log('----------------');
                         return (
-                            <li key={i}>
-                                <Image src={post} width={100} height={100} />
+                            <li key={i} className="m-2">
+                                <a href={`https://www.instagram.com/p/${post.shortcode}`} target="_blank" rel="noreferrer">
+                                    <Image src={post.s3_url} width={100} height={100} />
+                                </a>
                             </li>
                         )
                     })}

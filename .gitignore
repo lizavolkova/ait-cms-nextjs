@@ -32,3 +32,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+insta-OLD.json
+insta.json

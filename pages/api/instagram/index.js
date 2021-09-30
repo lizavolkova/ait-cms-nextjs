@@ -1,135 +1,130 @@
 import Instagram from "instagram-web-api"
 import fs from 'fs/promises'
 import path from 'path'
-import http from 'http'
-import fetch from "node-fetch";
-import util from 'util';
-import stream from 'stream';
-const streamPipeline = util.promisify(require('stream').pipeline)
-const finished = util.promisify(stream.finished);
-import getImages from './getImages'
 import saveImages from './saveImages'
+import getOneImage from './getOneImage'
 
-
+const CACHE_PATH = path.resolve('insta.json');
 
 export default async function index(req, res) {
+    let cachedData;
+
+    // TODO: wrap in try/catch
+    // TODO: check for file time stamp
+
     try {
-        //const images = await getImages();
-        const images = await saveImages();
-        res.status(200).json(images)
-    } catch(error) {
-        console.error(error)
-        res.status(500).json({error})
+        const cachedDataRaw = await fs.readFile(CACHE_PATH, 'utf8');
+        cachedData = await JSON.parse(cachedDataRaw);
+        console.log('Found Cached Data')
+    } catch (error) {
+        // TODO: throwing error breaks loop, find a better way
+        console.log(error)
+        console.error('Member cache not initialized', error)
     }
 
-    // const CACHE_PATH = path.resolve('insta.json')
-    // let cachedData = [];
-    //
-    // try {
-    //     cachedData = JSON.parse(fs.readFileSync(path.join(CACHE_PATH), 'utf8'))
-    // } catch (error) {
-    //     console.log('Member cache not initialized')
-    // }
-    //
-    // if (!cachedData) {
-    //     // fetch data
-    //     //write to file
-    //     // https://flaviocopes.com/nextjs-cache-data-globally/
-    //
-    // }
+    // if no cache or cache has expired
+    if (!cachedData) {
+        cachedData = await fetchAndCacheData();
+    }
 
+    const data = cachedData.map( ({ node: { thumbnail_src, display_url, id, shortcode} }) => {
+        return {
+            id,
+            display_url,
+            thumbnail_src,
+            shortcode
+        }
+    });
 
-    //https://dev.to/dlw/next-js-and-aws-image-demo-part-2-pl5
+    console.log('Requesting images from S3')
+    const promises = await data.map(async image => {
+        const test = await getOneImage(`${image.id}.jpg`);
+        const s3_url = await test.json();
+        return {
+            ...image,
+            s3_url
+        }
+    });
 
-    // delete all images in directory
-    // fs.readdir(images_dir, (err, files) => {
-    //     if (err) throw err;
-    //
-    //     for (const file of files) {
-    //         fs.unlink(path.join(images_dir, file), err => {
-    //             if (err) throw err;
-    //         });
-    //     }
-    // });
+    const done = await Promise.all(promises);
 
-    // save images
-    // async function saveImages(url, id) {
-    //     try {
-    //         const response = await fetch(url);
-    //         const buffer = await response.buffer()
-    //         fs.writeFile(path.resolve(images_dir, `img-${id}.jpg`), buffer, () => {
-    //             console.log('finished downloading!');
-    //         })
-    //     } catch(error) {
-    //         console.log('error fetching images', error)
-    //     }
-    //
-    // }
-    //
-    // const getData = async () => {
-    //     return Promise.all(cachedData.map(node => {
-    //         saveImages(node.node.thumbnail_src, node.node.id)
-    //     }))
-    // }
-    //
-    //
-    // getData().then(res => console.log('IMAGE SAVED!'))
+    res.status(200).json(done)
 
-
-    // let instagramPosts = []
-    //
-    // const client = new Instagram({
-    //     username: process.env.IG_USERNAME,
-    //     password: process.env.IG_PASSWORD,
-    // })
-    //
-    //
-    // let posts = []
-    // try {
-    //     // attempt to log in to Instagram
-    //     await client.login()
-    //     console.log(client);
-    //     // request photos for a specific index user
-    //     const index = await client.getPhotosByUsername({
-    //         username: process.env.IG_USERNAME,
-    //     })
-    //
-    //     console.log(index);
-    //
-    //     if (index["user"]["edge_owner_to_timeline_media"]["count"] > 0) {
-    //         // if we receive timeline data back
-    //         //  update the posts to be equal
-    //         // to the edges that were returned from the index API response
-    //         posts = index["user"]["edge_owner_to_timeline_media"]["edges"]
-    //     }
-    // } catch (err) {
-    //     // throw an error if login to Instagram fails
-    //     console.log("Something went wrong while logging into Instagram", err)
-    // }
-
-
-    // const post = await prisma.post.findUnique({
-    //     where: {
-    //         id: 1 || -1,
-    //     },
-    //     include: {
-    //         author: {
-    //             select: { name: true },
-    //         },
-    //     },
-    // });
-
-    //res.status(200).json(cachedData)
 }
 
-// {
-//     method: 'POST',
-//         body: JSON.stringify(
-//     {
-//         Key: 'test-image.jpg',
-//         url: 'https://images.pexels.com/photos/5490384/pexels-photo-5490384.jpeg?auto=compress&cs=tinysrgb&h=200&w=200'
-//     })
-// }
+/**
+ * Fetch data from IG and save to cache
+ * Upload new images to S3
+ * @returns {Promise<*|*[]>}
+ */
+const fetchAndCacheData = async() => {
+    try {
+        console.log('No cached data, fetching...')
+        // https://flaviocopes.com/nextjs-cache-data-globally/
+
+        const cachedData = await getInstagramData();
+        console.log('data fetched from instagram')
+        const imagesToSave = cachedData.map( ({node}) => {
+            return {
+                Key: `${node.id}.jpg`,
+                url: node.thumbnail_src
+            }
+        })
+
+        await saveImages(imagesToSave);
+        console.log('Images uploaded to S3 ');
+
+        return cachedData
+    } catch(err) {
+        // throw an error if login to Instagram fails
+        console.error("Something went wrong while trying to update the cache", err)
+        throw new Error(err)
+    }
+
+}
+
+/**
+ * Login and fetch data from Instagram
+ * @returns {Promise<*|*[]>}
+ */
+const getInstagramData = async () => {
+
+    // Create Instagram client
+    const client = new Instagram({
+        username: process.env.IG_USERNAME,
+        password: process.env.IG_PASSWORD,
+    })
+
+    let posts = []
+
+    try {
+        // attempt to log in to Instagram
+        await client.login()
+        console.log('Logged into Instagram')
+        // request photos for a specific index user
+        const index = await client.getPhotosByUsername({
+            username: process.env.IG_USERNAME,
+            first: 8
+        })
+        console.log('Got posts from Instagram');
+
+        if (index["user"]["edge_owner_to_timeline_media"]["count"] > 0) {
+            // if we receive timeline data back
+            //  update the posts to be equal
+            // to the edges that were returned from the index API response
+            posts = index["user"]["edge_owner_to_timeline_media"]["edges"]
+            await fs.writeFile(CACHE_PATH, JSON.stringify(posts));
+            return posts;
+        }
+    } catch (err) {
+        // throw an error if login to Instagram fails
+        console.error("Something went wrong while logging into Instagram", err)
+        throw new Error(err)
+    }
+
+
+
+}
 
 
 
