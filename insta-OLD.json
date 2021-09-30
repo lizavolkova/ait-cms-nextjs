@@ -1,6 +1,7 @@
 [
   {
     "node": {
+      "TEST_TAILWIND": "purge: ['./pages/**/*.{src,ts,jsx,tsx}', './components/**/*.{src,ts,jsx,tsx}'],",
       "__typename": "GraphImage",
       "id": "1706239740885199322",
       "dimensions": {

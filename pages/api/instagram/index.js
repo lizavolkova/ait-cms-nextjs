@@ -108,7 +108,7 @@ const getInstagramData = async () => {
         })
         console.log('Got posts from Instagram');
 
-        if (index["user"]["edge_owner_to_timeline_media"]["count"] > 0) {
+        if (index && index["user"]["edge_owner_to_timeline_media"]["count"] > 0) {
             // if we receive timeline data back
             //  update the posts to be equal
             // to the edges that were returned from the index API response

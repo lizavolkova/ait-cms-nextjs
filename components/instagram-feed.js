@@ -5,9 +5,11 @@ import Image from 'next/image'
 export default function InstagramFeed() {
     const [posts, setPosts] = useState([])
     const [error, setError] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     useEffect(async () => {
         try {
+            setLoading(true);
             const data = await fetch('/api/instagram')
             if (!data.ok) {
                 throw new Error(data.statusText);
@@ -15,13 +17,19 @@ export default function InstagramFeed() {
 
             const posts = await data.json();
             setPosts(posts)
+            setLoading(false)
 
         } catch(error) {
+            setLoading(false)
             console.log('api error')
             setError(true)
         }
 
     }, []);
+
+    if (loading) {
+        return <> </>
+    }
 
     if (!posts || error) {
         return (
