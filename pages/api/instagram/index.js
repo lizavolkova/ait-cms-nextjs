@@ -3,12 +3,14 @@ import fs from 'fs/promises'
 import path from 'path'
 import saveImages from './saveImages'
 import getOneImage from './getOneImage'
+import logger from '../../../lib/logger'
 
 const CACHE_PATH = path.resolve('insta.json');
 
 export default async function index(req, res) {
     let cachedData;
 
+    logger.info("testing from logger pino!!")
     // TODO: wrap in try/catch
     // TODO: check for file time stamp
 
