@@ -100,10 +100,10 @@ const getInstagramData = async () => {
     try {
         // attempt to log in to Instagram
         await client.login()
-        console.log('Logged into Instagram')
+        console.log('Logged into Instagram ', process.env.IG_USERNAME, process.env.IG_PASSWORD)
         // request photos for a specific index user
         const index = await client.getPhotosByUsername({
-            username: "adventures.in.time",
+            username: process.env.IG_USERNAME,
             first: 8
         })
         console.log('Got posts from Instagram');
