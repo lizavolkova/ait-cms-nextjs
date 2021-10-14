@@ -90,15 +90,14 @@ const loginToInsta = async () => {
 
     // Create Instagram client
     const client = new Instagram({
-        username: 'volk2712',
-        password: 'Volk@Autumn123'
+        username: process.env.IG_USERNAME,
+        password: process.env.IG_PASSWORD
     })
 
     try {
         // attempt to log in to Instagram
         await client.login()
-        console.log('Logged into Instagram ', 'process.env.IG_USERNAME', process.env.IG_PASSWORD)
-        // request photos for a specific index user
+        console.log('Logged into Instagram ', process.env.IG_USERNAME)
 
         return client;
 
@@ -120,6 +119,8 @@ const getInstagramData = async () => {
 
     try {
         const client = await loginToInsta();
+
+        // request photos for a specific index user
         const index = await client.getPhotosByUsername({
             username: process.env.IG_USERNAME,
             first: 8
