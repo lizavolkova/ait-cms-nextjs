@@ -90,11 +90,12 @@ const fetchAndCacheData = async() => {
  * @returns {Promise<*|*[]>}
  */
 const getInstagramData = async () => {
-
+    console.log('GETTING INSTA DATA FOR ', process.env.IG_USERNAME);
+    
     // Create Instagram client
     const client = new Instagram({
-        username: process.env.IG_USERNAME,
-        password: process.env.IG_PASSWORD,
+        username: 'volk2712',
+        password: 'Volk@Autumn123'
     })
 
     let posts = []
@@ -102,7 +103,7 @@ const getInstagramData = async () => {
     try {
         // attempt to log in to Instagram
         await client.login()
-        console.log('Logged into Instagram ', process.env.IG_USERNAME, process.env.IG_PASSWORD)
+        console.log('Logged into Instagram ', 'process.env.IG_USERNAME', process.env.IG_PASSWORD)
         // request photos for a specific index user
         const index = await client.getPhotosByUsername({
             username: process.env.IG_USERNAME,
