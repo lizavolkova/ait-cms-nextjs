@@ -79,10 +79,34 @@ const fetchAndCacheData = async() => {
         return cachedData
     } catch(err) {
         // throw an error if login to Instagram fails
-        console.error("Something went wrong while trying to update the cache", err)
+        //console.error("Something went wrong while trying to update the cache", err)
         throw new Error(err)
     }
 
+}
+
+const loginToInsta = async () => {
+    console.log('GETTING INSTA DATA FOR ', process.env.IG_USERNAME);
+
+    // Create Instagram client
+    const client = new Instagram({
+        username: 'volk2712',
+        password: 'Volk@Autumn123'
+    })
+
+    try {
+        // attempt to log in to Instagram
+        await client.login()
+        console.log('Logged into Instagram ', 'process.env.IG_USERNAME', process.env.IG_PASSWORD)
+        // request photos for a specific index user
+
+        return client;
+
+    }   catch(err) {
+        // throw an error if login to Instagram fails
+        console.error("Something went wrong while logging into Instagram", err)
+        throw new Error(err)
+    }
 }
 
 /**
@@ -90,21 +114,12 @@ const fetchAndCacheData = async() => {
  * @returns {Promise<*|*[]>}
  */
 const getInstagramData = async () => {
-    console.log('GETTING INSTA DATA FOR ', process.env.IG_USERNAME);
-    
-    // Create Instagram client
-    const client = new Instagram({
-        username: 'volk2712',
-        password: 'Volk@Autumn123'
-    })
+
 
     let posts = []
 
     try {
-        // attempt to log in to Instagram
-        await client.login()
-        console.log('Logged into Instagram ', 'process.env.IG_USERNAME', process.env.IG_PASSWORD)
-        // request photos for a specific index user
+        const client = await loginToInsta();
         const index = await client.getPhotosByUsername({
             username: process.env.IG_USERNAME,
             first: 8
@@ -121,7 +136,7 @@ const getInstagramData = async () => {
         }
     } catch (err) {
         // throw an error if login to Instagram fails
-        console.error("Something went wrong while logging into Instagram", err)
+        console.error("Something went wrong while fetching photos from Insta", err)
         throw new Error(err)
     }
 
