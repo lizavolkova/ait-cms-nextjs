@@ -100,7 +100,12 @@ const getInstagramData = async () => {
     let posts = []
 
     try {
-        const user = await fetch('https://www.instagram.com/volk2712/channel/?__a=1');
+        const user = await fetch('https://www.instagram.com/volk2712/channel/?__a=1',{
+            headers: {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'
+            }
+        });
+        console.log('USER ', user);
         const userData = await user.json();
         console.log('USER DATA')
         console.log(userData);
