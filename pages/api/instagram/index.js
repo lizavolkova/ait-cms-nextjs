@@ -4,8 +4,9 @@ import path from 'path'
 import saveImages from './saveImages'
 import getOneImage from './getOneImage'
 import logger from '../../../lib/logger'
+import os from 'os';
 
-const CACHE_PATH = path.resolve('insta.json');
+const CACHE_PATH = path.join(os.tmpdir(),'insta.json');
 
 export default async function index(req, res) {
     let cachedData;
