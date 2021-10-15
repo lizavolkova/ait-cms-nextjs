@@ -39,6 +39,7 @@ export default async function index(req, res) {
     });
 
     console.log('Requesting images from S3')
+    
     const promises = await data.map(async image => {
         const test = await getOneImage(`${image.id}.jpg`);
         const s3_url = await test.json();
@@ -113,8 +114,6 @@ const loginToInsta = async () => {
  * @returns {Promise<*|*[]>}
  */
 const getInstagramData = async () => {
-
-
     let posts = []
 
     try {
