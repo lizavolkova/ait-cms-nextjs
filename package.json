@@ -13,6 +13,7 @@
     "aws-sdk": "^2.995.0",
     "classnames": "2.3.1",
     "date-fns": "2.22.1",
+    "instagram-private-api": "^1.45.1",
     "instagram-web-api": "git+https://github.com/lizavolkova/instagram-web-api.git",
     "next": "latest",
     "node-fetch": "^3.0.0",
