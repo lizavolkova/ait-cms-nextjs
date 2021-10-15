@@ -53,6 +53,12 @@ export default async function index(req, res) {
 
     res.status(200).json(done)
 
+    // const test = await fetch('https://www.instagram.com/volk2712/channel/?__a=1');
+    // const json = await test.json();
+    // console.log('JSON ', json);
+    //
+    // res.status(200).json({});
+
 }
 
 /**
@@ -80,33 +86,10 @@ const fetchAndCacheData = async() => {
         return cachedData
     } catch(err) {
         // throw an error if login to Instagram fails
-        //console.error("Something went wrong while trying to update the cache", err)
+        console.error("Something went wrong while trying to update the cache", err)
         throw new Error(err)
     }
 
-}
-
-const loginToInsta = async () => {
-    console.log('GETTING INSTA DATA FOR ', process.env.IG_USERNAME);
-
-    // Create Instagram client
-    const client = new Instagram({
-        username: process.env.IG_USERNAME,
-        password: process.env.IG_PASSWORD
-    })
-
-    try {
-        // attempt to log in to Instagram
-        await client.login()
-        console.log('Logged into Instagram ', process.env.IG_USERNAME)
-
-        return client;
-
-    }   catch(err) {
-        // throw an error if login to Instagram fails
-        console.error("Something went wrong while logging into Instagram", err)
-        throw new Error(err)
-    }
 }
 
 /**
@@ -117,23 +100,21 @@ const getInstagramData = async () => {
     let posts = []
 
     try {
-        const client = await loginToInsta();
+        const user = await fetch('https://www.instagram.com/volk2712/channel/?__a=1');
+        const userData = await user.json();
+        console.log('USER DATA')
+        console.log(userData);
+        const { edge_owner_to_timeline_media } = userData?.graphql?.user;
 
-        // request photos for a specific index user
-        const index = await client.getPhotosByUsername({
-            username: process.env.IG_USERNAME,
-            first: 8
-        })
-        console.log('Got posts from Instagram');
+        console.log(edge_owner_to_timeline_media)
 
-        if (index && index["user"]["edge_owner_to_timeline_media"]["count"] > 0) {
-            // if we receive timeline data back
-            //  update the posts to be equal
-            // to the edges that were returned from the index API response
-            posts = index["user"]["edge_owner_to_timeline_media"]["edges"]
+        if (edge_owner_to_timeline_media.count > 0) {
+            const { edges } = edge_owner_to_timeline_media
             await fs.writeFile(CACHE_PATH, JSON.stringify(posts));
-            return posts;
+            console.log(edges);
+            return edges;
         }
+
     } catch (err) {
         // throw an error if login to Instagram fails
         console.error("Something went wrong while fetching photos from Insta", err)
