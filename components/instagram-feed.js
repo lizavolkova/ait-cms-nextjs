@@ -47,15 +47,15 @@ export default function InstagramFeed() {
                     Follow Us on Instagram
                 </a>
                 <ul className="flex flex-wrap justify-center">
-                    {/*{posts.map((post, i) => {*/}
-                    {/*    return (*/}
-                    {/*        <li key={i} className="m-2">*/}
-                    {/*            <a href={`https://www.instagram.com/p/${post.shortcode}`} target="_blank" rel="noreferrer">*/}
-                    {/*                <Image src={post.s3_url} width={100} height={100} />*/}
-                    {/*            </a>*/}
-                    {/*        </li>*/}
-                    {/*    )*/}
-                    {/*})}*/}
+                    {posts.map((post, i) => {
+                        return (
+                            <li key={i} className="m-2">
+                                <a href={`https://www.instagram.com/p/${post.shortcode}`} target="_blank" rel="noreferrer">
+                                    <Image src={post.s3_url} width={100} height={100} />
+                                </a>
+                            </li>
+                        )
+                    })}
                 </ul>
             </h2>
 

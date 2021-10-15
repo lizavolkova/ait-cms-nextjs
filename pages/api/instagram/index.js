@@ -49,6 +49,7 @@ export default async function index(req, res) {
     });
 
     const done = await Promise.all(promises);
+    console.log('Images fetched from S3')
 
     res.status(200).json(done)
 
@@ -90,8 +91,8 @@ const loginToInsta = async () => {
 
     // Create Instagram client
     const client = new Instagram({
-        username: 'volk2712',
-        password: 'Volk@Autumn123'
+        username: process.env.IG_USERNAME,
+        password: process.env.IG_PASSWORD
     })
 
     try {
@@ -130,6 +131,7 @@ const getInstagramData = async () => {
             // to the edges that were returned from the index API response
             posts = index["user"]["edge_owner_to_timeline_media"]["edges"]
             await fs.writeFile(CACHE_PATH, JSON.stringify(posts));
+            console.log(posts)
             return posts;
         }
     } catch (err) {
