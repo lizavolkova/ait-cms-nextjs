@@ -1,0 +1,72 @@
+org: lizavolkova
+app: aws-node-project
+service: aws-ait-project
+
+frameworkVersion: '2'
+
+plugins:
+  - serverless-bundle # Package our functions with Webpack
+  - serverless-dotenv-plugin
+
+custom:
+  upload: aws-ait-project
+  dotenv:
+    path: ../.env
+  logLevelMap:
+    prod: info
+    staging: info
+  logLevel: ${self:custom.logLevelMap.${opt:stage, self:provider.stage, 'dev'}, 'debug'}
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  lambdaHashingVersion: 20201221
+  stage: dev
+  region: us-east-1
+  environment:
+    LOG_LEVEL: ${self:custom.logLevel}
+
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:ListBucket
+      Resource: "arn:aws:s3:::${opt:stage, self:provider.stage, 'dev'}-${self:custom.upload}"
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+      Resource: "arn:aws:s3:::${opt:stage, self:provider.stage, 'dev'}-${self:custom.upload}/*"
+
+functions:
+  images:
+    handler: src/images.handler
+    environment:
+      BUCKET_NAME: ${opt:stage, self:provider.stage, 'dev'}-${self:custom.upload}
+    events:
+      - http:
+          path: images
+          method: get
+          cors: true
+  uploadImages:
+    handler: src/uploadImages.handler
+    environment:
+      BUCKET_NAME: ${opt:stage, self:provider.stage, 'dev'}-${self:custom.upload}
+    events:
+      - http:
+          path: uploadImages
+          method: post
+          cors: true
+  signedUrl:
+    handler: src/signedUrl.handler
+    events:
+      - http:
+          path: signed-url
+          method: get
+          cors: true
+
+resources:
+  Resources:
+    S3BucketOutputs:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: "${opt:stage, self:provider.stage, 'dev'}-${self:custom.upload}"

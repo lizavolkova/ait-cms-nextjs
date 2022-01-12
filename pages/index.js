@@ -1,6 +1,7 @@
+import { getAllPostsForHome, getBlogSettings } from '../lib/api'
 import Container from '../components/container'
 import Layout from '../components/layout/layout'
-import { getAllPostsForHome, getBlogSettings } from '../lib/api'
+
 import LayoutSideBar from '../components/layout/layout-sidebar'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -19,7 +20,7 @@ export default function Index({ allPosts: { edges }, preview, settings }) {
       setIsLoading(true)
       async function getSearchPosts() {
         setSearchPosts({ edges: [] })
-        const posts = await fetch(`http://localhost:3000/api/search?query=${searchQuery}`)
+        const posts = await fetch(`/api/search?query=${searchQuery}`)
         const postsJSON = await posts.json()
         setSearchPosts(postsJSON)
         setIsLoading(false)
