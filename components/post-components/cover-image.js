@@ -2,6 +2,7 @@ import cn from 'classnames'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState, useEffect, useRef } from 'react'
+import { COLOR_API_URL } from '../../lib/constants'
 
 export default function CoverImage({ title, coverImage, slug }) {
   const anchorRef = useRef(null);
@@ -21,7 +22,7 @@ export default function CoverImage({ title, coverImage, slug }) {
       small_image = test.sourceUrl
 
       //fetch dominant color from image
-      fetch(`/api/color`, {
+      fetch(COLOR_API_URL, {
           method: 'POST',
           body: JSON.stringify({
             url: small_image

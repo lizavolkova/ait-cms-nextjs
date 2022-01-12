@@ -1,5 +1,6 @@
 //https://darrenwhite.dev/blog/nextjs-aws-image-demo-part-3
 import fetch from "node-fetch";
+import { AWS_GET_IMAGES_URL, AWS_SIGNED_URL } from '../../../lib/constants';
 
 const getImages = async (req, res) => {
     try {
@@ -10,7 +11,7 @@ const getImages = async (req, res) => {
             },
         };
 
-        const imagesRes = await fetch('https://opxxbb1zq6.execute-api.us-east-1.amazonaws.com/dev/images', options);
+        const imagesRes = await fetch(AWS_GET_IMAGES_URL, options);
 
         if (!imagesRes.ok) {
             throw new Error(imagesRes.statusText);
@@ -19,7 +20,7 @@ const getImages = async (req, res) => {
         const { data } = await imagesRes.json();
 
         const images = data.map(({Key}) => {
-            return `https://opxxbb1zq6.execute-api.us-east-1.amazonaws.com/dev/signed-url?key=${Key}`
+            return `${AWS_SIGNED_URL}?key=${Key}`
         })
 
         // map every URL to promise of the fetch

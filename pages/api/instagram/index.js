@@ -25,7 +25,6 @@ export default async function index(req, res) {
     if (!cachedData) {
         cachedData = await fetchAndCacheData();
     }
-    console.log(cachedData)
 
     const data = cachedData.map( ({ node: { thumbnail_src, display_url, id, shortcode, edge_media_to_caption} }) => {
         return {

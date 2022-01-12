@@ -1,4 +1,5 @@
 import fetch from "node-fetch";
+import { AWS_SIGNED_URL } from '../../../lib/constants';
 
 const getOneImage = async (Key) => {
     try {
@@ -8,8 +9,7 @@ const getOneImage = async (Key) => {
                 'Content-Type': 'application/json'
             },
         };
-
-        const url = `https://opxxbb1zq6.execute-api.us-east-1.amazonaws.com/dev/signed-url?key=${Key}`;
+        const url = `${AWS_SIGNED_URL}?key=${Key}`;
         return await fetch(url, options);
     } catch (error) {
         throw new Error(`Error fetching images: ${error}`);

@@ -1,6 +1,7 @@
 import Link from "next/link"
 import {useEffect, useState} from "react";
 import Image from 'next/image'
+import {INSTAGRAM_API_URL, INSTAGRAM_USER_NAME} from '../lib/constants';
 
 export default function InstagramFeed() {
     const [posts, setPosts] = useState([])
@@ -10,7 +11,7 @@ export default function InstagramFeed() {
     useEffect(async () => {
         try {
             setLoading(true);
-            const data = await fetch('/api/instagram')
+            const data = await fetch(INSTAGRAM_API_URL)
             if (!data.ok) {
                 throw new Error(data.statusText);
             }
@@ -38,11 +39,11 @@ export default function InstagramFeed() {
             </>
         )
     }
-    
+
     return (
         <>
             <h2>
-                <a href="https://www.instagram.com/adventures.in.mini/">
+                <a href={`https://www.instagram.com/${INSTAGRAM_USER_NAME}/`}>
                     Follow Us on Instagram
                 </a>
                 <ul className="flex flex-wrap justify-center">
