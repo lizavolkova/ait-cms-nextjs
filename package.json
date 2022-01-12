@@ -8,7 +8,6 @@
     "server": "cd server && serverless deploy"
   },
   "dependencies": {
-    "@datadog/browser-logs": "^3.6.4",
     "@headlessui/react": "^1.4.1",
     "aws-sdk": "^2.995.0",
     "classnames": "2.3.1",
@@ -17,16 +16,11 @@
     "next": "latest",
     "node-fetch": "^3.0.0",
     "node-vibrant": "^3.2.1-alpha.1",
-    "pino-logflare": "^0.3.12",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "serverless-bundle": "^5.0.2",
     "serverless-dotenv-plugin": "^3.9.0",
-    "serverless-pseudo-parameters": "^2.6.1",
-    "winston": "^3.3.3",
-    "winston-aws-cloudwatch": "^3.0.0",
-    "winston-datadog-logger": "^4.0.1",
-    "winston-logflare": "^0.1.1"
+    "serverless-pseudo-parameters": "^2.6.1"
   },
   "devDependencies": {
     "autoprefixer": "10.2.6",

@@ -3,22 +3,18 @@ import fs from 'fs/promises'
 import path from 'path'
 import saveImages from './saveImages'
 import getOneImage from './getOneImage'
-import logger from '../../../lib/logger'
 import os from 'os';
 
+// TODO: proabably move this to S3
 const CACHE_PATH = path.join(os.tmpdir(),'insta.json');
 
 export default async function index(req, res) {
     let cachedData;
 
-    logger.info("testing from logger pino!!")
-    // TODO: wrap in try/catch
-    // TODO: check for file time stamp
-
     try {
         const cachedDataRaw = await fs.readFile(CACHE_PATH, 'utf8');
         cachedData = await JSON.parse(cachedDataRaw);
-        console.log('Found Cached Data')
+        console.log('Found Cached Data at ', CACHE_PATH)
     } catch (error) {
         // TODO: throwing error breaks loop, find a better way
         console.log(error)
@@ -29,13 +25,15 @@ export default async function index(req, res) {
     if (!cachedData) {
         cachedData = await fetchAndCacheData();
     }
+    console.log(cachedData)
 
-    const data = cachedData.map( ({ node: { thumbnail_src, display_url, id, shortcode} }) => {
+    const data = cachedData.map( ({ node: { thumbnail_src, display_url, id, shortcode, edge_media_to_caption} }) => {
         return {
             id,
             display_url,
             thumbnail_src,
-            shortcode
+            shortcode,
+            edge_media_to_caption
         }
     });
 
@@ -63,11 +61,12 @@ export default async function index(req, res) {
  */
 const fetchAndCacheData = async() => {
     try {
+        // REFERENCE: https://flaviocopes.com/nextjs-cache-data-globally/
         console.log('No cached data, fetching...')
-        // https://flaviocopes.com/nextjs-cache-data-globally/
 
         const cachedData = await getInstagramData();
-        console.log('data fetched from instagram')
+        console.log('Data fetched from instagram')
+
         const imagesToSave = cachedData.map( ({node}) => {
             return {
                 Key: `${node.id}.jpg`,
@@ -87,6 +86,10 @@ const fetchAndCacheData = async() => {
 
 }
 
+/**
+ * Login to instagram and create client
+ * @returns {Promise<*>}
+ */
 const loginToInsta = async () => {
     console.log('GETTING INSTA DATA FOR ', process.env.IG_USERNAME);
 
@@ -100,7 +103,6 @@ const loginToInsta = async () => {
         // attempt to log in to Instagram
         await client.login()
         console.log('Logged into Instagram ', 'process.env.IG_USERNAME', process.env.IG_PASSWORD)
-        // request photos for a specific index user
 
         return client;
 
