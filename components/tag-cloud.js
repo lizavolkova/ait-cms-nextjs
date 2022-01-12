@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { BLOG_DIRECTORY } from "../lib/constants"
 
 export default function TagCloud({ tags, minFont, maxFont }) {
   const normalize = (val, min, max) => {
@@ -14,7 +15,7 @@ export default function TagCloud({ tags, minFont, maxFont }) {
       {tags.edges.map((tag) => {
         const size = normalize(tag.node.count, countMin, countMax)
         return (
-          <Link key={tag.node.id} href={tag.node.uri}>
+          <Link key={tag.node.id} href={`${BLOG_DIRECTORY}/${tag.node.uri}`}>
             <a
               className="hover:underline inline-block"
               style={{ fontSize: `${size}pt` }}

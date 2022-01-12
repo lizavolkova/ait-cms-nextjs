@@ -18,6 +18,7 @@ import { CMS_NAME } from '../../../lib/constants'
 import Tags from '../../../components/post-components/tags'
 import PostPreview from '../../../components/post-components/post-preview'
 import LayoutSideBar from '../../../components/layout/layout-sidebar'
+import { BLOG_DIRECTORY } from '../../../lib/constants'
 
 export default function Post({ settings, post, posts, preview }) {
   const router = useRouter()
@@ -86,7 +87,7 @@ export async function getStaticPaths() {
   const allPosts = await getAllPostsWithSlug()
 
   return {
-    paths: allPosts.edges.map(({ node }) => `/blog/posts/${node.slug}`) || [],
+    paths: allPosts.edges.map(({ node }) => `${BLOG_DIRECTORY}/posts/${node.slug}`) || [],
     fallback: true,
   }
 }

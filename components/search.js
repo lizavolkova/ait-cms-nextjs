@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { BLOG_DIRECTORY } from "../lib/constants"
 
 export default function Search() {
   const router = useRouter()
@@ -6,7 +7,7 @@ export default function Search() {
   const handleSearchSubmit = (e) => {
     e.preventDefault()
     const searchQuery = e.target.search.value
-    router.push(`/?s=${searchQuery}`)
+    router.push(`${BLOG_DIRECTORY}/?s=${searchQuery}`)
     e.target.reset()
   }
 

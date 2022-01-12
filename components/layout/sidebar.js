@@ -4,6 +4,7 @@ import Link from 'next/link'
 import TagCloud from '../tag-cloud'
 import Search from '../search'
 import InstagramFeed from "../instagram-feed";
+import { BLOG_DIRECTORY } from "../../lib/constants"
 
 export default function SideBar() {
   const siteSettings = useSiteContext()
@@ -21,7 +22,7 @@ export default function SideBar() {
         {siteSettings?.categories?.edges.map((category) => {
           return (
             <div key={category.node.id} className="text-center">
-              <Link href={category.node.uri}>
+              <Link href={`${BLOG_DIRECTORY}/${category.node.uri}`}>
                 <a className="hover:underline">{category.node.name}</a>
               </Link>
             </div>

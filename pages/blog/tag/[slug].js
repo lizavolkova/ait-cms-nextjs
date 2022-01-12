@@ -3,6 +3,7 @@ import AllPosts from '../../../components/layout/all-posts'
 import Container from '../../../components/container'
 import Layout from '../../../components/layout/layout'
 import PostTransition from '../../../components/post-components/posts-transition'
+import { BLOG_DIRECTORY } from '../../../lib/constants'
 
 export default function Post({ allPosts = {}, preview, settings, params }) {
   const { edges } = allPosts
@@ -31,7 +32,7 @@ export async function getStaticPaths() {
   const allTags = await getAllTags()
 
   return {
-    paths: allTags.edges.map(({ node }) => `/blog/tag/${node.slug}`) || [],
+    paths: allTags.edges.map(({ node }) => `${BLOG_DIRECTORY}/tag/${node.slug}`) || [],
     fallback: true,
   }
 }
