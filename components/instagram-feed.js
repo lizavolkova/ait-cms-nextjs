@@ -1,38 +1,22 @@
 import Link from "next/link"
 import {useEffect, useState} from "react";
 import Image from 'next/image'
+import { useQuery } from 'react-query'
 import {INSTAGRAM_API_URL, INSTAGRAM_USER_NAME} from '../lib/constants';
 
 export default function InstagramFeed() {
-    const [posts, setPosts] = useState([])
-    const [error, setError] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const { isLoading, error, data } = useQuery('instagramData', () =>
+        fetch(INSTAGRAM_API_URL)
+            .then(res =>
+            res.json()
+        )
+    )
 
-    useEffect(async () => {
-        try {
-            setLoading(true);
-            const data = await fetch(INSTAGRAM_API_URL)
-            if (!data.ok) {
-                throw new Error(data.statusText);
-            }
-
-            const posts = await data.json();
-            setPosts(posts)
-            setLoading(false)
-
-        } catch(error) {
-            setLoading(false)
-            console.log('api error')
-            setError(true)
-        }
-
-    }, []);
-
-    if (loading) {
+    if (isLoading) {
         return <>Loading...</>
     }
 
-    if (!posts || error) {
+    if (!data || error) {
         return (
             <>
                 There was a problem connecting to Instagram
@@ -47,7 +31,7 @@ export default function InstagramFeed() {
                     Follow Us on Instagram
                 </a>
                 <ul className="flex flex-wrap justify-center">
-                    {posts.map((post, i) => {
+                    {data.map((post, i) => {
                         const altText = post.edge_media_to_caption?.edges[0]?.node?.text.replace(/(#\w+)+/g, "").trim();
 
                         return (

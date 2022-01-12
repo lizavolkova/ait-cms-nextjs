@@ -1,6 +1,13 @@
 import '../styles/index.css'
 import { useState } from 'react'
 import { SiteContext } from '../context/use-site'
+import {
+  QueryClient,
+  QueryClientProvider,
+} from 'react-query'
+
+// Create a client
+const queryClient = new QueryClient()
 
 function MyApp({ Component, pageProps }) {
   const { settings } = pageProps
@@ -8,7 +15,9 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <SiteContext.Provider value={siteSettings}>
-      <Component {...pageProps} />
+      <QueryClientProvider client={queryClient}>
+        <Component {...pageProps} />
+      </QueryClientProvider>
     </SiteContext.Provider>
   )
 }
