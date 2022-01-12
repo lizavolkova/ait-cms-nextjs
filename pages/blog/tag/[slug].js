@@ -1,8 +1,8 @@
-import { getBlogSettings, getAllTags, getAllPostsByTag } from '../../lib/api'
-import AllPosts from '../../components/layout/all-posts'
-import Container from '../../components/container'
-import Layout from '../../components/layout/layout'
-import PostTransition from '../../components/post-components/posts-transition'
+import { getBlogSettings, getAllTags, getAllPostsByTag } from '../../../lib/api'
+import AllPosts from '../../../components/layout/all-posts'
+import Container from '../../../components/container'
+import Layout from '../../../components/layout/layout'
+import PostTransition from '../../../components/post-components/posts-transition'
 
 export default function Post({ allPosts = {}, preview, settings, params }) {
   const { edges } = allPosts

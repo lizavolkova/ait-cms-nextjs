@@ -31,7 +31,7 @@ export default function Menu({ sticky }) {
               {siteSettings?.menu.menuItems.nodes.map((item) => {
                 return (
                   <li key={item.id} className="mx-1 text-center">
-                    {item.label}
+                    <a href={item.path}>{item.label}</a>
                   </li>
                 )
               })}

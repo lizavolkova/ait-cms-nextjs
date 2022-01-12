@@ -1,23 +1,23 @@
 import { useRouter } from 'next/router'
 import ErrorPage from 'next/error'
-import Container from '../../components/container'
-import PostBody from '../../components/post-components/post-body'
-import MoreStories from '../../components/post-components/more-stories'
-import Header from '../../components/layout/header'
-import PostHeader from '../../components/post-components/post-header'
-import SectionSeparator from '../../components/section-separator'
-import Layout from '../../components/layout/layout'
+import Container from '../../../components/container'
+import PostBody from '../../../components/post-components/post-body'
+import MoreStories from '../../../components/post-components/more-stories'
+import Header from '../../../components/layout/header'
+import PostHeader from '../../../components/post-components/post-header'
+import SectionSeparator from '../../../components/section-separator'
+import Layout from '../../../components/layout/layout'
 import {
   getAllPostsWithSlug,
   getPostAndMorePosts,
   getBlogSettings,
-} from '../../lib/api'
-import PostTitle from '../../components/post-components/post-title'
+} from '../../../lib/api'
+import PostTitle from '../../../components/post-components/post-title'
 import Head from 'next/head'
-import { CMS_NAME } from '../../lib/constants'
-import Tags from '../../components/post-components/tags'
-import PostPreview from '../../components/post-components/post-preview'
-import LayoutSideBar from '../../components/layout/layout-sidebar'
+import { CMS_NAME } from '../../../lib/constants'
+import Tags from '../../../components/post-components/tags'
+import PostPreview from '../../../components/post-components/post-preview'
+import LayoutSideBar from '../../../components/layout/layout-sidebar'
 
 export default function Post({ settings, post, posts, preview }) {
   const router = useRouter()

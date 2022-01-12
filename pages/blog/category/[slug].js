@@ -3,11 +3,11 @@ import {
   getAllCategories,
   getAllPostsByCategory,
   getAllPostsForHome,
-} from '../../lib/api'
-import Layout from '../../components/layout/layout'
-import Container from '../../components/container'
-import AllPosts from '../../components/layout/all-posts'
-import PostTransition from '../../components/post-components/posts-transition'
+} from '../../../lib/api'
+import Layout from '../../../components/layout/layout'
+import Container from '../../../components/container'
+import AllPosts from '../../../components/layout/all-posts'
+import PostTransition from '../../../components/post-components/posts-transition'
 
 export default function Post({ allPosts = {}, preview, settings, params }) {
   const { edges } = allPosts
