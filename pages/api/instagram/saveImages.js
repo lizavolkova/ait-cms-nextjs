@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import { AWS_GET_IMAGES_URL, AWS_SIGNED_URL } from '../../../lib/constants';
+import { AWS_UPLOAD_IMAGES_URL } from '../../../lib/constants';
 
 const saveImages = async (data) => {
     try {
