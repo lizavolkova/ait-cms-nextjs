@@ -31,7 +31,7 @@ export async function getStaticPaths() {
   const allTags = await getAllTags()
 
   return {
-    paths: allTags.edges.map(({ node }) => `blog/tag/${node.slug}`) || [],
+    paths: allTags.edges.map(({ node }) => `/blog/tag/${node.slug}`) || [],
     fallback: true,
   }
 }
