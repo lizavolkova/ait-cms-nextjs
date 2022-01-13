@@ -20,6 +20,7 @@ export default function CoverImage({ title, coverImage, slug }) {
       })
 
       small_image = test.sourceUrl
+      console.log(small_image)
 
       //fetch dominant color from image
       fetch(COLOR_API_URL, {
@@ -33,8 +34,11 @@ export default function CoverImage({ title, coverImage, slug }) {
         // next/image doesn't support dynamic style tag
         // tailwind doesn't support dynamic colors at runtime
         // facepalm have to resort to refs for the placeholder dominant color image
-        const imageTag = (anchorRef.current).getElementsByTagName('img')[0];
-        imageTag.style.backgroundColor = color.hex;
+        if (anchorRef.current) {
+          const imageTag = (anchorRef.current).getElementsByTagName('img')[0];
+          imageTag.style.backgroundColor = color.hex;
+        }
+
       });
     }
   }, []);
