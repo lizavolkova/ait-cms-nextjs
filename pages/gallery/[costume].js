@@ -4,7 +4,7 @@ import Layout from '../../components/layout/layout'
 import {BLOG_DIRECTORY} from "../../lib/constants";
 
 
-export default function Index({ allPosts: { edges }, preview, settings }) {
+export default function Index({ preview }) {
 
 
     return (
@@ -15,7 +15,7 @@ export default function Index({ allPosts: { edges }, preview, settings }) {
                     [IMAGES]
                     <p>blurb about costume</p>
                     CONSTRUCTION NOTES
-                    <p>consturction notes</p>
+                    <p>construction notes</p>
                     [IMAGES]
                 </Container>
             </Layout>
