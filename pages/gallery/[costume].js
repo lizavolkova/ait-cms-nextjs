@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import {getAllPostsForHome, getAllCostumes, getBlogSettings} from '../../lib/api'
 import Container from '../../components/container'
 import Layout from '../../components/layout/layout'
@@ -6,8 +7,18 @@ import ImageGallery from '../../components/layout/image-gallery';
 import ImageGalleryElement from '../../components/layout/image-gallery-element';
 import Link from "next/link";
 import CoverImage from "../../components/post-components/cover-image";
+import Modal from '../../components/modal';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import SwiperCore, { Navigation } from 'swiper';
+SwiperCore.use([Navigation]);
 
 export default function Index({ preview }) {
+    const [showModal, setShowModal] = useState(false);
+    const [swiper, setSwiper] = useState(null);
+
     const photos = [
         {
             "sourceUrl": "https://images.unsplash.com/photo-1459190342773-1851eb48d5d2?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=799&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTYyNzc5ODkwOQ&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=600",
@@ -179,8 +190,32 @@ export default function Index({ preview }) {
         }
     ];
 
+    const openModal = (index) => {
+        setShowModal(true);
+        const swiper = document.querySelector('.swiper');
+        console.log(swiper);
+    }
+
+    const closeModal = (url) => {
+        setShowModal(false);
+    }
+
     return (
         <>
+            <Modal show={showModal} onClose={closeModal}>
+                <div className="w-full">
+                    <Swiper navigation={true} loop={true}  init={true} className="swiper">
+                        {photos.map((photo, i) => {
+                           return (
+                               <SwiperSlide key={i}>
+                                    <img className="ml-auto mr-auto" src={photo.sourceUrl} />
+                               </SwiperSlide>
+                           )
+                        })}
+                    </Swiper>
+                </div>
+            </Modal>
+
             <Layout preview={preview}>
                 <Container>
                     <div className="prose max-w-none">
@@ -189,7 +224,7 @@ export default function Index({ preview }) {
                         <ImageGallery>
                             {photos.map((photo,i) => {
                                 return (
-                                    <ImageGalleryElement key={i}>
+                                    <ImageGalleryElement key={i} onClick={() => openModal(i)}>
                                         <CoverImage title="" coverImage={photo} slug="" />
                                     </ImageGalleryElement>
                                 )
@@ -205,7 +240,7 @@ export default function Index({ preview }) {
 
                             Phasellus accumsan arcu vel risus accumsan pellentesque. Nunc eu fringilla arcu. Vivamus nec diam justo. Duis ut nunc et lectus pellentesque accumsan sed vel eros. Vestibulum sapien quam, imperdiet ut nibh a, lacinia condimentum libero. Aenean a odio et orci convallis vehicula. Nullam laoreet nisi vitae nisl venenatis auctor id a diam. Aliquam erat volutpat. Praesent cursus auctor erat, vitae tempor mi elementum vitae. Cras blandit convallis urna at accumsan. Curabitur ac magna eu est tempus gravida. Donec sodales ultrices hendrerit. Aliquam faucibus metus ac enim elementum tincidunt. Donec dictum porttitor quam ac lobortis.</p>
                         <ImageGallery>
-                            {photos.map((photo,i) => {
+                            {photosCons.map((photo,i) => {
                                 return (
                                     <ImageGalleryElement key={i}>
                                         <CoverImage title="" coverImage={photo} slug="" />

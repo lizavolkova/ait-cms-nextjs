@@ -278,7 +278,7 @@ export default function Index({ allPosts: { edges }, preview, settings }) {
                                         <ImageGalleryElement key={i}>
                                             <Link href="gallery/outlander">
                                                 <>
-                                                    <div className="absolute w-full h-full bg-black z-10 pb=4 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+                                                    <div className="absolute w-full h-full bg-black z-10 pb=4 opacity-0 group-hover:opacity-40 transition-opacity ease-in duration-300"></div>
 
                                                     <div className="absolute transition-opacity duration-300 inset-x-0 bottom-0 z-30 opacity-100 group-hover:opacity-100 lg:opacity-0">
                                                         <h4 className="font-sans text-white m-8 font-bold">TEXT</h4>

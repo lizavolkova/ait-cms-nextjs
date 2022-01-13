@@ -9,6 +9,7 @@ module.exports = {
         success: '#0070f3',
         cyan: '#79FFE1',
         mainPink: '#C2185B',
+        halfBlack: 'rgba(0,0,0,0.5)'
       },
       spacing: {
         28: '7rem',
