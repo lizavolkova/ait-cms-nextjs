@@ -8,6 +8,7 @@ import ImageGalleryElement from '../../components/layout/image-gallery-element';
 import Link from "next/link";
 import CoverImage from "../../components/post-components/cover-image";
 import Modal from '../../components/modal';
+import ModalGallery from '../../components/modal-gallery';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -16,8 +17,11 @@ import SwiperCore, { Navigation } from 'swiper';
 SwiperCore.use([Navigation]);
 
 export default function Index({ preview }) {
-    const [showModal, setShowModal] = useState(false);
-    const [swiper, setSwiper] = useState(null);
+    const [showMainGalleryModal, setShowMainGalleryModal] = useState(false);
+    const [showConstructionGalleryModal, setShowConstructionGalleryModal] = useState(false);
+
+    const swiperMainClass = 'swiper-main';
+    const swiperConstructionClass = 'swiper-construction';
 
     const photos = [
         {
@@ -190,31 +194,30 @@ export default function Index({ preview }) {
         }
     ];
 
-    const openModal = (index) => {
-        setShowModal(true);
-        const swiper = document.querySelector('.swiper');
-        console.log(swiper);
+    const openMainModal = (index) => {
+        setShowMainGalleryModal(true);
+        const swiper = document.querySelector(`.${swiperMainClass}`).swiper;
+        swiper.slideTo(index + 1, 0);
     }
 
-    const closeModal = (url) => {
-        setShowModal(false);
+    const closeMainModal = () => {
+        setShowMainGalleryModal(false);
+    }
+
+    const openConstructionModal = (index) => {
+        setShowConstructionGalleryModal(true);
+        const swiper = document.querySelector(`.${swiperConstructionClass}`).swiper;
+        swiper.slideTo(index + 1, 0);
+    }
+
+    const closeConstructionModal = () => {
+        setShowConstructionGalleryModal(false);
     }
 
     return (
         <>
-            <Modal show={showModal} onClose={closeModal}>
-                <div className="w-full">
-                    <Swiper navigation={true} loop={true}  init={true} className="swiper">
-                        {photos.map((photo, i) => {
-                           return (
-                               <SwiperSlide key={i}>
-                                    <img className="ml-auto mr-auto" src={photo.sourceUrl} />
-                               </SwiperSlide>
-                           )
-                        })}
-                    </Swiper>
-                </div>
-            </Modal>
+            <ModalGallery showModal={showMainGalleryModal} closeModal={closeMainModal} photos={photos} swiperClass={swiperMainClass}/>
+            <ModalGallery showModal={showConstructionGalleryModal} closeModal={closeConstructionModal} photos={photosCons} swiperClass={swiperConstructionClass}/>
 
             <Layout preview={preview}>
                 <Container>
@@ -224,7 +227,7 @@ export default function Index({ preview }) {
                         <ImageGallery>
                             {photos.map((photo,i) => {
                                 return (
-                                    <ImageGalleryElement key={i} onClick={() => openModal(i)}>
+                                    <ImageGalleryElement key={i} onClick={() => openMainModal(i)}>
                                         <CoverImage title="" coverImage={photo} slug="" />
                                     </ImageGalleryElement>
                                 )
@@ -242,7 +245,7 @@ export default function Index({ preview }) {
                         <ImageGallery>
                             {photosCons.map((photo,i) => {
                                 return (
-                                    <ImageGalleryElement key={i}>
+                                    <ImageGalleryElement key={i} onClick={() => openConstructionModal(i)}>
                                         <CoverImage title="" coverImage={photo} slug="" />
                                     </ImageGalleryElement>
                                 )

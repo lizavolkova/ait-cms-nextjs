@@ -1,12 +1,20 @@
 import React from "react";
+import cn from "classnames";
 
-export default function Modal({children, show, onClose}) {
-    if (!show) {
-        return null
+export default function Modal({children, show, onClose, onOpenCallback}) {
+
+    if (typeof document !== 'undefined' && !show) {
+        document.body.style.overflow = 'visible';
+    }
+
+    if (typeof document !== 'undefined' && show) {
+        document.body.style.overflow = 'hidden';
     }
 
     return (
-        <div className="fixed left-0 top-0 right-0 bottom-0  flex items-center justify-center z-30" >
+        <div className={cn(
+            'fixed left-0 top-0 right-0 bottom-0  flex items-center justify-center ',
+            show ? 'opacity-100 z-30' : 'opacity-0 z-0')}>
             <div className="bg-halfBlack w-full h-full fixed" onClick={onClose}></div >
             <div className="w-full flex items-center justify-center">
                 <div className="absolute top-0 right-0 p-8 cursor-pointer text-white" onClick={onClose}>
@@ -16,7 +24,7 @@ export default function Modal({children, show, onClose}) {
                 </div>
                 {children}
             </div>
-
         </div>
     )
 }
+
