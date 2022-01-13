@@ -132,6 +132,7 @@ export default function ImageGallery({ element }) {
                         return (
                             <li className="list-none m-4 mb-8 relative group" key={i}>
                                 <Link href="/gallery/outlander">
+                                    <>
                                     <div className="absolute w-full h-full bg-black z-10 pb=4 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
 
                                     <div className="absolute transition-opacity duration-300 inset-x-0 bottom-0 z-30 opacity-100 group-hover:opacity-100 lg:opacity-0">
@@ -139,7 +140,7 @@ export default function ImageGallery({ element }) {
                                     </div>
                                     <CoverImage title="" coverImage={photo} slug="" />
                                      {/*<Image className="relative z-20" src={photo.sourceUrl} width={photo.mediaDetails.width} height={photo.mediaDetails.height} alt=""/>*/}
-
+                                    </>
                                 </Link>
                             </li>
                         )
