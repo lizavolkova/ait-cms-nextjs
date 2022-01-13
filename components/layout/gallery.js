@@ -131,7 +131,7 @@ export default function ImageGallery({ element }) {
                 {test.map((photo,i) => {
                         return (
                             <li className="list-none m-4 mb-8 relative group" key={i}>
-                                <a href="/gallery/outlander">
+                                <Link href="/gallery/outlander">
                                     <div className="absolute w-full h-full bg-black z-10 pb=4 opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
 
                                     <div className="absolute transition-opacity duration-300 inset-x-0 bottom-0 z-30 opacity-100 group-hover:opacity-100 lg:opacity-0">
@@ -140,7 +140,7 @@ export default function ImageGallery({ element }) {
                                     <CoverImage title="" coverImage={photo} slug="" />
                                      {/*<Image className="relative z-20" src={photo.sourceUrl} width={photo.mediaDetails.width} height={photo.mediaDetails.height} alt=""/>*/}
 
-                                </a>
+                                </Link>
                             </li>
                         )
                     })
