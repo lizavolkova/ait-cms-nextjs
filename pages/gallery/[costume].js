@@ -11,12 +11,14 @@ export default function Index({ preview }) {
         <>
             <Layout preview={preview}>
                 <Container>
-                    COSTUME TITLE<br />
-                    [IMAGES]
-                    <p>blurb about costume</p>
-                    CONSTRUCTION NOTES
-                    <p>construction notes</p>
-                    [IMAGES]
+                    <>
+                        COSTUME TITLE<br />
+                        [IMAGES]
+                        <p>blurb about costume</p>
+                        CONSTRUCTION NOTES
+                        <p>construction notes</p>
+                        [IMAGES]
+                    </>
                 </Container>
             </Layout>
         </>
