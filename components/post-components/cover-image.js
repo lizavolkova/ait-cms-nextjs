@@ -20,7 +20,6 @@ export default function CoverImage({ title, coverImage, slug }) {
       })
 
       small_image = test.sourceUrl
-      console.log(small_image)
 
       //fetch dominant color from image
       fetch(COLOR_API_URL, {
