@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.4.1",
+    "@tailwindcss/typography": "^0.5.0",
     "aws-sdk": "^2.995.0",
     "classnames": "2.3.1",
     "date-fns": "2.22.1",
@@ -18,18 +19,21 @@
     "node-vibrant": "^3.2.1-alpha.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-masonry-component": "^6.3.0",
+    "react-masonry-css": "^1.0.16",
+    "react-photo-gallery": "^8.0.0",
     "react-query": "^3.34.8",
     "serverless-bundle": "^5.0.2",
     "serverless-dotenv-plugin": "^3.9.0",
     "serverless-pseudo-parameters": "^2.6.1"
   },
   "devDependencies": {
-    "autoprefixer": "10.2.6",
+    "autoprefixer": "^10.4.2",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
     "eslint-config-prettier": "^8.3.0",
-    "postcss": "8.3.5",
+    "postcss": "^8.4.5",
     "prettier": "2.4.1",
-    "tailwindcss": "^2.2.4"
+    "tailwindcss": "^3.0.13"
   }
 }

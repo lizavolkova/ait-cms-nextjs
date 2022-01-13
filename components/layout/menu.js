@@ -26,7 +26,7 @@ export default function Menu({ sticky }) {
               />
             </div>
           </div>
-          <div className="flex flex-grow justify-center">
+          <div className="flex grow justify-center">
             <ul className="w-80 flex justify-center">
               {siteSettings?.menu.menuItems.nodes.map((item) => {
                 return (

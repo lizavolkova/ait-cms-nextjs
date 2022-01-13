@@ -46,6 +46,7 @@ export default function CoverImage({ title, coverImage, slug }) {
       alt={`Cover Image for ${title}`}
       src={coverImage?.sourceUrl}
       placeholder="empty"
+      layout="responsive"
       onLoadingComplete={() => setLoaded(true)}
       className={cn(`filter shadow-small rounded-sm`, {
         'hover:shadow-medium transition-shadow duration-200': slug,
