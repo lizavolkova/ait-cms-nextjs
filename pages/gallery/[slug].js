@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {getAllPostsForHome, getAllCostumes, getBlogSettings} from '../../lib/api'
+import {getAllFeaturedCostumes, getCostumeBySlug, getBlogSettings} from '../../lib/api'
 import Container from '../../components/container'
 import Layout from '../../components/layout/layout'
 import {BLOG_DIRECTORY} from "../../lib/constants";
@@ -16,7 +16,8 @@ import 'swiper/css/navigation';
 import SwiperCore, { Navigation } from 'swiper';
 SwiperCore.use([Navigation]);
 
-export default function Index({ preview }) {
+export default function Index({ costume, preview }) {
+    console.log(costume)
     const [showMainGalleryModal, setShowMainGalleryModal] = useState(false);
     const [showConstructionGalleryModal, setShowConstructionGalleryModal] = useState(false);
 
@@ -217,6 +218,8 @@ export default function Index({ preview }) {
         setShowConstructionGalleryModal(false);
     }
 
+    const { date, title, costumeInfo: { sourceMaterial, images, constructionImages, description, constructionNotes } } = costume;
+
     return (
         <>
             <ModalGallery showModal={showMainGalleryModal} closeModal={closeMainModal} photos={photos} swiperClass={swiperMainClass}/>
@@ -225,31 +228,31 @@ export default function Index({ preview }) {
             <Layout preview={preview}>
                 <Container>
                     <div className="prose max-w-none">
-                        <h1 className="text-center">Costume Title</h1>
-                        <p className="text-center"><b>Year Completed</b>: 2020 | <b>Source Material</b>: Zelda</p>
+                        <h1 className="text-center">{title}</h1>
+                        <p className="text-center">{date && <><b>Year Completed</b>: {date} |</> } {sourceMaterial && <><b>Source Material</b>: {sourceMaterial}</>}</p>
                         <ImageGallery>
-                            {photos.map((photo,i) => {
+                            {images.map((image,i) => {
                                 return (
                                     <ImageGalleryElement key={i} onClick={() => openMainModal(i)}>
-                                        <CoverImage title="" coverImage={photo} slug="" />
+                                        <img src={image.sourceUrl} srcSet={image.srcSet} sizes={image.sizes} width={image.mediaDetails.width} height={image.mediaDetails.height} />
+                                        {/*<CoverImage title="" coverImage={photo} slug="" />*/}
                                     </ImageGalleryElement>
                                 )
                             })
                             }
                         </ImageGallery>
                         <hr />
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris scelerisque neque lorem, sed suscipit odio pulvinar nec. Nam non lectus ac lectus elementum maximus. Nam lobortis neque in arcu elementum, sed mollis justo congue. Quisque consectetur dictum urna, at aliquam est efficitur in. Aenean sed gravida lacus. Maecenas felis purus, eleifend nec lectus non, lobortis semper tellus. Donec commodo enim quis diam aliquet, vel interdum magna congue. Praesent sollicitudin volutpat est, accumsan hendrerit velit imperdiet at. Etiam id urna ac urna pharetra lacinia sodales ac lectus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Vestibulum a condimentum ante. Etiam eget sagittis felis. Donec diam augue, laoreet non ex sit amet, elementum accumsan erat. Quisque egestas lacus dictum diam dictum, et volutpat lorem consequat. Duis sed commodo ex. Morbi ultrices suscipit viverra.</p>
+                        <p dangerouslySetInnerHTML={{ __html: description }}></p>
 
                         <hr />
                         <h1 className="text-center">Construction Notes</h1>
-                        <p>Vestibulum tortor enim, molestie vitae gravida et, varius commodo sapien. Donec sed sapien sapien. Sed vulputate eget nunc eget porttitor. Suspendisse mattis mi a metus tristique molestie. Interdum et malesuada fames ac ante ipsum primis in faucibus. Cras malesuada ac risus sed molestie. Morbi ultrices tempor massa, nec blandit felis faucibus non. Quisque vulputate velit quis libero mollis consectetur eu nec nisi.
-
-                            Phasellus accumsan arcu vel risus accumsan pellentesque. Nunc eu fringilla arcu. Vivamus nec diam justo. Duis ut nunc et lectus pellentesque accumsan sed vel eros. Vestibulum sapien quam, imperdiet ut nibh a, lacinia condimentum libero. Aenean a odio et orci convallis vehicula. Nullam laoreet nisi vitae nisl venenatis auctor id a diam. Aliquam erat volutpat. Praesent cursus auctor erat, vitae tempor mi elementum vitae. Cras blandit convallis urna at accumsan. Curabitur ac magna eu est tempus gravida. Donec sodales ultrices hendrerit. Aliquam faucibus metus ac enim elementum tincidunt. Donec dictum porttitor quam ac lobortis.</p>
+                        <p dangerouslySetInnerHTML={{ __html: constructionNotes }}></p>
                         <ImageGallery>
-                            {photosCons.map((photo,i) => {
+                            {constructionImages.map((image,i) => {
                                 return (
                                     <ImageGalleryElement key={i} onClick={() => openConstructionModal(i)}>
-                                        <CoverImage title="" coverImage={photo} slug="" />
+                                        <img src={image.sourceUrl} srcSet={image.srcSet} sizes={image.sizes} width={image.mediaDetails.width} height={image.mediaDetails.height} />
+                                        {/*<CoverImage title="" coverImage={photo} slug="" />*/}
                                     </ImageGalleryElement>
                                 )
                             })
@@ -262,23 +265,21 @@ export default function Index({ preview }) {
     )
 }
 
-export async function getStaticProps({ preview = false }) {
+export async function getStaticProps({ params, preview = false }) {
     const settings = await getBlogSettings()
-    const allPosts = await getAllPostsForHome(preview)
+    const costume = await getCostumeBySlug(params.slug)
 
     return {
-        props: { allPosts, preview, settings },
+        props: { costume, preview, settings },
     }
 }
 
 export async function getStaticPaths() {
-    const allCostumes = await getAllCostumes()
+    const allCostumes = await getAllFeaturedCostumes()
     ////paths: allCostumes.nodes.map((node) => `/gallery/${node.slug}`) || [],
 
     return {
-        paths: [
-            {  params: { costume: 'outlander' } },
-        ],
+        paths: allCostumes.nodes.map((node) => `/gallery/${node.slug}`) || [],
         fallback: true,
     }
 }

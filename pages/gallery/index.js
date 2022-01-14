@@ -18,7 +18,7 @@ export default function Index({ allCostumes: { nodes }, preview, settings }) {
                             {nodes.map((costume) => {
                                     return (
                                         <ImageGalleryElement key={costume.id}>
-                                            <Link href="gallery/outlander">
+                                            <Link href={`/gallery/${costume.slug}`}>
                                                 <>
                                                     <div className="absolute w-full h-full bg-black z-10 pb=4 opacity-0 group-hover:opacity-40 transition-opacity ease-in duration-300 lg:opacity-0 opacity-20"></div>
                                                     <div className="absolute transition-opacity duration-300 inset-x-0 bottom-0 z-30 opacity-100 group-hover:opacity-100 lg:opacity-0">
