@@ -85,6 +85,7 @@ export async function getStaticProps({ params, preview = false, previewData }) {
 
 export async function getStaticPaths() {
   const allPosts = await getAllPostsWithSlug()
+  console.log(allPosts)
 
   return {
     paths: allPosts.edges.map(({ node }) => `${BLOG_DIRECTORY}/posts/${node.slug}`) || [],

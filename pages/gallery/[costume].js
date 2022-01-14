@@ -194,10 +194,14 @@ export default function Index({ preview }) {
         }
     ];
 
+    const goToSlide = (swiperClass, index) => {
+        const swiper = document.querySelector(`.${swiperClass}`).swiper;
+        swiper.slideTo(index + 1, 0);
+    }
+
     const openMainModal = (index) => {
         setShowMainGalleryModal(true);
-        const swiper = document.querySelector(`.${swiperMainClass}`).swiper;
-        swiper.slideTo(index + 1, 0);
+        goToSlide(swiperMainClass, index);
     }
 
     const closeMainModal = () => {
@@ -206,8 +210,7 @@ export default function Index({ preview }) {
 
     const openConstructionModal = (index) => {
         setShowConstructionGalleryModal(true);
-        const swiper = document.querySelector(`.${swiperConstructionClass}`).swiper;
-        swiper.slideTo(index + 1, 0);
+        goToSlide(swiperConstructionClass, index);
     }
 
     const closeConstructionModal = () => {
@@ -270,6 +273,7 @@ export async function getStaticProps({ preview = false }) {
 
 export async function getStaticPaths() {
     const allCostumes = await getAllCostumes()
+    ////paths: allCostumes.nodes.map((node) => `/gallery/${node.slug}`) || [],
 
     return {
         paths: [

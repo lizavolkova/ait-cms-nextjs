@@ -11,6 +11,7 @@ export default function PostHeader({
   author,
   categories,
 }) {
+    console.log(coverImage)
   return (
     <>
       <PostTitle>{title}</PostTitle>
