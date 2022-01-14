@@ -10,7 +10,7 @@ export default function ImageGallery({ children }) {
     const siteSettings = useSiteContext();
 
     const breakpointColumnsObj = {
-        default: 4,
+        default: 3,
         1280: 3,
         1024: 2,
         640: 1
@@ -27,4 +27,3 @@ export default function ImageGallery({ children }) {
 
     )
 }
-
