@@ -66,7 +66,7 @@ export default function Index({ costume, preview }) {
                             {images.map((image,i) => {
                                 return (
                                     <ImageGalleryElement key={i} onClick={() => openMainModal(i)}>
-                                        <img src={image.sourceUrl} srcSet={image.srcSet} sizes={image.sizes} width={image.mediaDetails.width} height={image.mediaDetails.height} />
+                                        <img src={image.sourceUrl} srcSet={image.srcSet} sizes={image.sizes} width={image.mediaDetails?.width} height={image.mediaDetails?.height} />
                                         {/*<CoverImage title="" coverImage={photo} slug="" />*/}
                                     </ImageGalleryElement>
                                 )
@@ -83,7 +83,7 @@ export default function Index({ costume, preview }) {
                             {constructionImages.map((image,i) => {
                                 return (
                                     <ImageGalleryElement key={i} onClick={() => openConstructionModal(i)}>
-                                        <img src={image.sourceUrl} srcSet={image.srcSet} sizes={image.sizes} width={image.mediaDetails.width} height={image.mediaDetails.height} />
+                                        <img src={image.sourceUrl} srcSet={image.srcSet} sizes={image.sizes} width={image.mediaDetails?.width} height={image.mediaDetails?.height} />
                                         {/*<CoverImage title="" coverImage={photo} slug="" />*/}
                                     </ImageGalleryElement>
                                 )
