@@ -122,6 +122,10 @@ p {
   color: #7f7f7f;
 }
 
+.modal-gallery p {
+  color: white;
+}
+
 .date-tags {
   font-family: 'Roboto';
   font-size: 0.675rem;

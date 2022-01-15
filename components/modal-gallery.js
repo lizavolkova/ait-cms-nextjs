@@ -10,12 +10,19 @@ export default function ModalGallery({showModal, closeModal, photos, swiperClass
 
     return (
         <Modal show={showModal} onClose={closeModal} >
-            <div className="w-full">
-                <Swiper navigation={true} loop={true} autoHeight={true} className={swiperClass}>
-                    {photos.map((photo, i) => {
+            <div className="w-full h-full modal-gallery">
+                <Swiper
+                    navigation={true}
+                    loop={true}
+                    autoHeight={true}
+                    className={swiperClass}>
+                    {photos.map((image, i) => {
                         return (
                             <SwiperSlide key={i}>
-                                <img className="ml-auto mr-auto" src={photo.sourceUrl} />
+                                <div className="relative max-w-4xl ml-auto mr-auto">
+                                    <img className="w-full " src={image.sourceUrl} />
+                                    {image.caption && <div className="absolute bottom-0 left-0 text-white w-full bg-halfBlack pl-4 pr-4" dangerouslySetInnerHTML={{ __html: image.caption }}></div>}
+                                </div>
                             </SwiperSlide>
                         )
                     })}
