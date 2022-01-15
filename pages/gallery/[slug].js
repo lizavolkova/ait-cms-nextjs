@@ -10,6 +10,7 @@ export default function Index({ costume, preview }) {
     }
 
     const { date, title, costumeInfo: { sourceMaterial, images, constructionImages, description, constructionNotes, inspirationText, inspirationImages, patternsSupplies } } = costume;
+    const completeDate = new Date(date).getFullYear();
 
     return (
         <>
@@ -17,7 +18,7 @@ export default function Index({ costume, preview }) {
                 <Container>
                     <div className="prose max-w-none">
                         <h1 className="text-center">{title}</h1>
-                        <p className="text-center">{date && <><b>Year Completed</b>: {date} |</> } {sourceMaterial && <><b>Source Material</b>: {sourceMaterial}</>}</p>
+                        <p className="text-center">{date && <><b>Year Completed</b>: {completeDate} </> } {sourceMaterial && <>| <b>Source Material</b>: {sourceMaterial}</>}</p>
 
                         <CostumeSection description={description} images={images}/>
                         <hr />
